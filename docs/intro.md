@@ -28,3 +28,4 @@ The impact that the software will have on the customer's business include,
 The risks that the software may have for the business include,
 - **Data Expansion:** Although the basic information of a contact is kept there isn't a way to increase the field capacity of the address book information.
 - **Software Integration:** The software is currently an app on a computer and hasn't been tested on a phone and thus may not be compatible with the phone app system to easily call contacts from. Email addresses stored on the system also aren't linked and therefore won't open an email provider to compose a message.
+- **International Numbers:** Currently the software handles UK numbers and matches format of numbers to 11 digits. Therefore, it won't be able to handle international phone numbers yet.
