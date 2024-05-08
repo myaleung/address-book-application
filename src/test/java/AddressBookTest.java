@@ -1,31 +1,41 @@
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
 
 public class AddressBookTest {
     @Nested
     @DisplayName("Address Book Tests")
     class AddressBookTests {
-        private AddressBook addressBook;
+        private AddressBook testAddressBook;
+
         @BeforeEach
         void setUp() {
-            addressBook = new AddressBook();
+            testAddressBook = new AddressBook();
         }
 
         @AfterEach
         void tearDown() {
-            addressBook = null;
+            testAddressBook = null;
         }
 
         @Test
         @DisplayName("should add contact to array list on creation")
-        public void test() {
+        public void testShouldAddContactToArrayList() {
             //Arrange
             //Act
-            addressBook.addContact("Amy", "Leung", "amy@gmail.com", "01234123123");
+            testAddressBook.addContact("Amy", "Leung", "amy@gmail.com", "01234123123");
             //Assert
-            assertEquals(1, addressBook.viewContacts().size());
+            assertEquals(1, testAddressBook.viewContacts().size());
+        }
+
+        @Test
+        @DisplayName("should not add contact to array list if first name field is empty")
+        public void testShouldNotAddContactToArrayListIfFirstNameFieldIsEmpty() {
+            //Arrange
+            //Act
+            testAddressBook.addContact("", "L", "amy@gmail.com", "01234123123");
+            //Assert
+            assertEquals(0, testAddressBook.viewContacts().size());
         }
     }
 }
