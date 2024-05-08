@@ -25,4 +25,8 @@ public class Contact {
     public String getSurname() {
         return this.lastName;
     }
+
+    public String getEmail() {
+        return this.email;
+    }
 }

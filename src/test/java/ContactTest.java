@@ -97,5 +97,15 @@ public class ContactTest {
             assertThrows(IllegalArgumentException.class,
                     () -> new Contact(validFName, null, validEmail, validPhoneNumber));
         }
+
+        @Test
+        @DisplayName("Email is set by constructor")
+        public void testEmailSetByConstructor() {
+            //Arrange
+            //Act
+            String actualName = testContact.getEmail();
+            //Assert
+            assertEquals(validEmail, actualName);
+        }
     }
 }
