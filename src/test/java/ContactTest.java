@@ -3,6 +3,7 @@ import org.junit.platform.commons.util.StringUtils;
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ContactTest {
     private Contact testContact;
@@ -29,9 +30,9 @@ public class ContactTest {
         public void testNameSetByConstructor() {
             //Arrange
             String expectedName = validFName + validLName;
-            // Act
+            //Act
             String actualName = testContact.getName();
-            // Assert
+            //Assert
             assertEquals(expectedName, actualName);
         }
 
@@ -39,9 +40,9 @@ public class ContactTest {
         @DisplayName("First name is set by constructor")
         public void testFirstNameSetByConstructor() {
             //Arrange
-            // Act
+            //Act
             String actualName = testContact.getFirstName();
-            // Assert
+            //Assert
             assertEquals(validFName, actualName);
         }
 
@@ -49,10 +50,52 @@ public class ContactTest {
         @DisplayName("Last name is set by constructor")
         public void testLastNameSetByConstructor() {
             //Arrange
-            // Act
+            //Act
             String actualName = testContact.getSurname();
-            // Assert
+            //Assert
             assertEquals(validLName, actualName);
+        }
+
+        @Test
+        @DisplayName("Throw Exception when first name field is empty")
+        public void testConstructorThrowsExceptionWhenFirstNameIsEmpty() {
+            //Arrange
+            String testFName = "";
+            //Act
+            //Assert
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Contact(testFName, validLName, validEmail, validPhoneNumber));
+        }
+
+        @Test
+        @DisplayName("Throw Exception when first name field is null")
+        public void testConstructorThrowsExceptionWhenFirstNameIsNull() {
+            //Arrange
+            //Act
+            //Assert
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Contact(null, validLName, validEmail, validPhoneNumber));
+        }
+
+        @Test
+        @DisplayName("Throw Exception when last name field is empty")
+        public void testConstructorThrowsExceptionWhenLastNameIsEmpty() {
+            //Arrange
+            String testLName = "";
+            //Act
+            //Assert
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Contact(validFName, testLName, validEmail, validPhoneNumber));
+        }
+
+        @Test
+        @DisplayName("Throw Exception when last name field is null")
+        public void testConstructorThrowsExceptionWhenLastNameIsNull() {
+            //Arrange
+            //Act
+            //Assert
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Contact(validFName, null, validEmail, validPhoneNumber));
         }
     }
 }

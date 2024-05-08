@@ -1,6 +1,7 @@
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AddressBookTest {
     @Nested
@@ -19,7 +20,7 @@ public class AddressBookTest {
         }
 
         @Test
-        @DisplayName("should add contact to array list on creation")
+        @DisplayName("Should add contact to array list on creation")
         public void testShouldAddContactToArrayList() {
             //Arrange
             //Act
@@ -29,13 +30,13 @@ public class AddressBookTest {
         }
 
         @Test
-        @DisplayName("should not add contact to array list if first name field is empty")
-        public void testShouldNotAddContactToArrayListIfFirstNameFieldIsEmpty() {
+        @DisplayName("Should throw exception if first name field is empty")
+        public void testShouldThrowExceptionIfFirstNameFieldIsEmpty() {
             //Arrange
             //Act
-            testAddressBook.addContact("", "L", "amy@gmail.com", "01234123123");
             //Assert
-            assertEquals(0, testAddressBook.viewContacts().size());
+            assertThrows(IllegalArgumentException.class,
+                    () -> testAddressBook.addContact("", "L", "amy@gmail.com", "01234123123"));
         }
     }
 }

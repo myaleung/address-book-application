@@ -36,7 +36,6 @@ classDiagram
 
 ### Tests
 - [ ] addContact should +1 to array list length if contact was created.
-- [ ] check that name passed is a string of letters.
 - [ ] check email address has the correct format.
 - [ ] check phone number is a string of numbers of 11 digits (UK).
 ---
