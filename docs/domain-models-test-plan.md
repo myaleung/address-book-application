@@ -9,10 +9,10 @@ title: Address Book Software
 classDiagram
     class AddressBook {
         -contacts ArrayList<Contact>
-        +addContact(String, String, String, double) void
+        +addContact(String, String, String, String) void
         +editContact() boolean
         +deleteContact() void
-        +search(String or double) Contact
+        +search(String) Contact
         +viewContacts() ArrayList
         +clearContacts() boolean
     }
@@ -20,22 +20,22 @@ classDiagram
         -fName String
         -lName String
         -email  String
-        -phoneNo double
+        -phoneNumber String
         +getName() String
         +getEmail() String
-        +getPhoneNo() double
+        +getphoneNumber() String
         +setName(String) void
         +setEmail(String) void
-        +setPhoneNo(double) void
+        +setPhoneNumber(String) void
         -validateEmail(email String)$ void
-        -validatePhoneNo(phoneNo String)$ void
+        -validatePhoneNo(phoneNumber String)$ void
     }
 ```
 ## User Stories
 <img src="images/img.png" alt="As a user, I want to be able to add a contact to the address book, so that I can keep a record of my contacts" width="450" height="100%"/>
 
 ### Tests
-- [ ] createContact should +1 to array list length if account was created.
+- [ ] addContact should +1 to array list length if contact was created.
 - [ ] check that name passed is a string of letters.
 - [ ] check email address has the correct format.
 - [ ] check phone number is a string of numbers of 11 digits (UK).
