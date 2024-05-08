@@ -1,3 +1,5 @@
+package com.digitalfuturescorp.app;
+
 import java.util.ArrayList;
 
 public class AddressBook {

@@ -1,3 +1,5 @@
+package com.digitalfuturescorp.app;
+
 public class Contact {
     private String firstName;
     private String lastName;
@@ -7,6 +9,7 @@ public class Contact {
     public Contact(String fName, String lName, String email, String phoneNumber) {
         if (fName == null || fName.trim().isEmpty()) throw new IllegalArgumentException("First Name cannot be null or empty");
         if (lName == null || lName.trim().isEmpty()) throw new IllegalArgumentException("First Name cannot be null or empty");
+        if (email == null || email.trim().isEmpty()) throw new IllegalArgumentException("Email cannot be null or empty");
 
         this.firstName = fName;
         this.lastName = lName;

@@ -1,3 +1,6 @@
+package com.digitalfutures.app;
+
+import com.digitalfuturescorp.app.AddressBook;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -26,7 +29,7 @@ public class AddressBookTest {
             //Act
             testAddressBook.addContact("Amy", "Leung", "amy@gmail.com", "01234123123");
             //Assert
-            assertEquals(1, testAddressBook.viewContacts().size());
+            Assertions.assertEquals(1, testAddressBook.viewContacts().size());
         }
 
         @Test

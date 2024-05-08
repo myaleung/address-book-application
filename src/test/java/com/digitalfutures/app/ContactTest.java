@@ -1,6 +1,7 @@
+package com.digitalfutures.app;
+
+import com.digitalfuturescorp.app.Contact;
 import org.junit.jupiter.api.*;
-import org.junit.platform.commons.util.StringUtils;
-import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -106,6 +107,27 @@ public class ContactTest {
             String actualName = testContact.getEmail();
             //Assert
             assertEquals(validEmail, actualName);
+        }
+
+        @Test
+        @DisplayName("Throw Exception when email field is empty")
+        public void testConstructorThrowsExceptionWhenEmailIsEmpty() {
+            //Arrange
+            String testEmail = "";
+            //Act
+            //Assert
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Contact(validFName, validLName, testEmail, validPhoneNumber));
+        }
+
+        @Test
+        @DisplayName("Throw Exception when email field is null")
+        public void testConstructorThrowsExceptionWhenEmailIsNull() {
+            //Arrange
+            //Act
+            //Assert
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Contact(validFName, validLName, null, validPhoneNumber));
         }
     }
 }
