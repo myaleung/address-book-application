@@ -104,9 +104,9 @@ public class ContactTest {
         public void testEmailSetByConstructor() {
             //Arrange
             //Act
-            String actualName = testContact.getEmail();
+            String actualEmail = testContact.getEmail();
             //Assert
-            assertEquals(validEmail, actualName);
+            assertEquals(validEmail, actualEmail);
         }
 
         @Test
@@ -128,6 +128,16 @@ public class ContactTest {
             //Assert
             assertThrows(IllegalArgumentException.class,
                     () -> new Contact(validFName, validLName, null, validPhoneNumber));
+        }
+
+        @Test
+        @DisplayName("Phone number is set by constructor")
+        public void testPhoneNumberSetByConstructor() {
+            //Arrange
+            //Act
+            String actualPhoneNumber = testContact.getPhoneNumber();
+            //Assert
+            assertEquals(validPhoneNumber, actualPhoneNumber);
         }
     }
 }
