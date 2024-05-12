@@ -7,15 +7,10 @@ public class Contact {
     private String phoneNumber;
 
     public Contact(String fName, String lName, String email, String phoneNumber) {
-        if (fName == null || fName.trim().isEmpty()) throw new IllegalArgumentException("First Name cannot be null or empty");
-        if (lName == null || lName.trim().isEmpty()) throw new IllegalArgumentException("First Name cannot be null or empty");
-        if (email == null || email.trim().isEmpty()) throw new IllegalArgumentException("Email cannot be null or empty");
-        if (phoneNumber == null || phoneNumber.trim().isEmpty()) throw new IllegalArgumentException("Phone number cannot be null or empty");
-
-        this.firstName = fName;
-        this.lastName = lName;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
+        this.firstName = validateName(fName);
+        this.lastName = validateName(lName);
+        this.email = validateEmail(email);
+        this.phoneNumber = validatePhoneNumber(phoneNumber);
     }
 
     public String getName() {
@@ -36,5 +31,20 @@ public class Contact {
 
     public String getPhoneNumber() {
         return this.phoneNumber;
+    }
+
+    public String validateName(String name) {
+        if (name == null || name.trim().isEmpty()) throw new IllegalArgumentException("Name cannot be null or empty");
+        return name;
+    }
+
+    public String validateEmail(String email) {
+        if (email == null || email.trim().isEmpty()) throw new IllegalArgumentException("Email cannot be null or empty");
+        return email;
+    }
+
+    public String validatePhoneNumber(String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.trim().isEmpty()) throw new IllegalArgumentException("Phone number cannot be null or empty");
+        return phoneNumber;
     }
 }
