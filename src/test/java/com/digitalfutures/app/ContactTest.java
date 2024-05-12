@@ -139,5 +139,26 @@ public class ContactTest {
             //Assert
             assertEquals(validPhoneNumber, actualPhoneNumber);
         }
+
+        @Test
+        @DisplayName("Throw Exception when phone number field is empty")
+        public void testConstructorThrowsExceptionWhenPhoneNumberIsEmpty() {
+            //Arrange
+            String testPhoneNumber = "";
+            //Act
+            //Assert
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Contact(validFName, validLName, validEmail, testPhoneNumber));
+        }
+
+        @Test
+        @DisplayName("Throw Exception when phone number field is null")
+        public void testConstructorThrowsExceptionWhenPhoneNumberIsNull() {
+            //Arrange
+            //Act
+            //Assert
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Contact(validFName, validLName, validEmail, null));
+        }
     }
 }

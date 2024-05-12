@@ -10,6 +10,7 @@ public class Contact {
         if (fName == null || fName.trim().isEmpty()) throw new IllegalArgumentException("First Name cannot be null or empty");
         if (lName == null || lName.trim().isEmpty()) throw new IllegalArgumentException("First Name cannot be null or empty");
         if (email == null || email.trim().isEmpty()) throw new IllegalArgumentException("Email cannot be null or empty");
+        if (phoneNumber == null || phoneNumber.trim().isEmpty()) throw new IllegalArgumentException("Phone number cannot be null or empty");
 
         this.firstName = fName;
         this.lastName = lName;
