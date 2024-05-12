@@ -44,7 +44,9 @@ public class Contact {
     }
 
     public String validatePhoneNumber(String phoneNumber) {
+        final String phoneNumRegEx = "^(((\\+44\\s?\\d{4}|\\(?0\\d{4}\\)?)\\s?\\d{3}\\s?\\d{3})|((\\+44\\s?\\d{3}|\\(?0\\d{3}\\)?)\\s?\\d{3}\\s?\\d{4})|((\\+44\\s?\\d{2}|\\(?0\\d{2}\\)?)\\s?\\d{4}\\s?\\d{4}))(\\s?\\#(\\d{4}|\\d{3}))?$";
         if (phoneNumber == null || phoneNumber.trim().isEmpty()) throw new IllegalArgumentException("Phone number cannot be null or empty");
+        if (!phoneNumber.matches(phoneNumRegEx)) throw new IllegalArgumentException("Phone number does not have 11 digits");
         return phoneNumber;
     }
 }

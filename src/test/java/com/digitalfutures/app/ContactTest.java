@@ -160,5 +160,15 @@ public class ContactTest {
             assertThrows(IllegalArgumentException.class,
                     () -> new Contact(validFName, validLName, validEmail, null));
         }
+
+        @Test
+        @DisplayName("Throw Exception when phone number field is not 11 digits long")
+        public void testConstructorThrowsExceptionWhenPhoneNumberIsNot11Digits() {
+            //Arrange
+            //Act
+            //Assert
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Contact(validFName, validLName, validEmail, "0121121"));
+        }
     }
 }
