@@ -29,4 +29,8 @@ public class AddressBook {
         }
         return result;
     }
+
+    public void deleteContact(Contact contactToDelete) {
+        contacts.remove(contactToDelete);
+    }
 }

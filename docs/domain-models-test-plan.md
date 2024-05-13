@@ -9,10 +9,10 @@ title: Address Book Software
 classDiagram
     class AddressBook {
         -contacts ArrayList<Contact>
-        +addContact(String, String, String, String) void
-        +editContact() boolean
-        +deleteContact() void
-        +search(String) Contact
+        +addContact(Contact) void
+        +editContact(Contact) boolean
+        +deleteContact(Contact) void
+        +searchContact(String) Contact
         +viewContacts() ArrayList
         +clearContacts() boolean
     }
@@ -22,13 +22,16 @@ classDiagram
         -email  String
         -phoneNumber String
         +getName() String
+        +getFirstName() String
+        +getSurname() String
         +getEmail() String
         +getphoneNumber() String
         +setName(String) void
         +setEmail(String) void
         +setPhoneNumber(String) void
-        -validateEmail(email String)$ void
-        -validatePhoneNo(phoneNumber String)$ void
+        -validateName(name String)$ name
+        -validateEmail(email String)$ email
+        -validatePhoneNumber(phoneNumber String)$ phoneNumber
     }
 ```
 ## User Stories

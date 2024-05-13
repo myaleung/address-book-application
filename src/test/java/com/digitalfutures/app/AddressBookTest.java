@@ -3,13 +3,8 @@ package com.digitalfutures.app;
 import com.digitalfuturescorp.app.AddressBook;
 import com.digitalfuturescorp.app.Contact;
 import org.junit.jupiter.api.*;
-import org.testng.internal.collections.Pair;
 
-import java.lang.constant.Constable;
-import java.util.ArrayList;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class AddressBookTest {
@@ -109,6 +104,42 @@ public class AddressBookTest {
             //Act
             //Assert
             Assertions.assertNull(testAddressBook.searchContacts(searchName));
+        }
+    }
+
+    @Nested
+    @DisplayName("Address Book Contact Mutation Tests")
+    class AddressBookContactMutationTests {
+        private AddressBook testAddressBook;
+        private Contact testEntry1;
+        private Contact testEntry2;
+
+        @BeforeEach
+        void setUp() {
+            testAddressBook = new AddressBook();
+            testEntry1 = spy(new Contact("Molly", "Ellis", "m@e.com", "01121121123"));
+            testEntry2 = spy(new Contact("Peter", "Ellis", "pe@f.com", "01188121123"));
+        }
+
+        @AfterEach
+        void tearDown() {
+            testAddressBook = null;
+            testEntry1 = null;
+        }
+
+        @Test
+        @DisplayName("Should remove contact from contacts list")
+        public void testShouldDeleteContactFromArrayList() {
+            //Arrange
+            testAddressBook.addContact(testEntry1);
+            testAddressBook.addContact(testEntry2);
+            //Act
+            testAddressBook.deleteContact(testEntry2);
+            //Assert
+            assertAll(
+                    () -> assertEquals(1,testAddressBook.viewContacts().size()),
+                    () -> assertFalse(testAddressBook.viewContacts().contains(testEntry2))
+            );
         }
     }
 }
