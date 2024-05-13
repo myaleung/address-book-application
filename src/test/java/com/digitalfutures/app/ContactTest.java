@@ -223,5 +223,39 @@ public class ContactTest {
                     () -> assertNotEquals(oldName, actualName)
             );
         }
+
+        @Test
+        @DisplayName("Should change contact entry email address")
+        public void testContactEmailAddressIsChanged() {
+            //Arrange
+            String newEmail = "this@newemail.co";
+            String oldEmail = testContact2.getEmail();
+            //Act
+            testContact2.setEmail(newEmail);
+            String actualName = testContact2.getEmail();
+
+            //Assert
+            assertAll(
+                    () -> assertEquals(newEmail, actualName),
+                    () -> assertNotEquals(oldEmail, actualName)
+            );
+        }
+
+        @Test
+        @DisplayName("Should change contact entry phone number")
+        public void testContactPhoneNumberIsChanged() {
+            //Arrange
+            String newPhoneNumber = "01155654654";
+            String oldPhoneNumber = testContact2.getPhoneNumber();
+            //Act
+            testContact2.setPhoneNumber(newPhoneNumber);
+            String actualName = testContact2.getPhoneNumber();
+
+            //Assert
+            assertAll(
+                    () -> assertEquals(newPhoneNumber, actualName),
+                    () -> assertNotEquals(oldPhoneNumber, actualName)
+            );
+        }
     }
 }

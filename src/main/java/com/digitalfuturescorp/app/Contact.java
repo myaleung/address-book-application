@@ -39,8 +39,16 @@ public class Contact {
         return this.email;
     }
 
+    public void setEmail(String email) {
+        this.email = validateEmail(email);
+    }
+
     public String getPhoneNumber() {
         return this.phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = validatePhoneNumber(phoneNumber);
     }
 
     public String validateName(String name) {
