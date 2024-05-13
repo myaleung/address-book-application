@@ -88,5 +88,27 @@ public class AddressBookTest {
         public void testShouldThrowExceptionWhenSearchingEmptyValue() {
             assertThrows(IllegalArgumentException.class, ()->testAddressBook.searchContacts(""));
         }
+
+        @Test
+        @DisplayName("Should return contact if partial match found")
+        public void testShouldReturnContactIfPartialMatchFoundInArrayList() {
+            //Arrange
+            String searchName = "Mol";
+            testAddressBook.addContact(testEntry);
+            //Act
+            //Assert
+            Assertions.assertEquals(testEntry, testAddressBook.searchContacts(searchName));
+        }
+
+        @Test
+        @DisplayName("Should return null if there isn't a match")
+        public void testWhenNoResultsFound() {
+            //Arrange
+            String searchName = "Mollie";
+            testAddressBook.addContact(testEntry);
+            //Act
+            //Assert
+            Assertions.assertNull(testAddressBook.searchContacts(searchName));
+        }
     }
 }
