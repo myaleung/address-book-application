@@ -52,7 +52,6 @@ classDiagram
 - [ ] if contact that matches name is found, return contact information.
 - [ ] check search entry isn't null.
 - [ ] check search entry isn't empty.
-- [ ] check search entry is a string.
 ---
 <img src="images/img_3.png" alt="As a user, I want to be able to remove a contact from my address book so that I keep my address book tidy" width="450" height="100%"/>
 

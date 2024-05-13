@@ -1,5 +1,7 @@
 package com.digitalfuturescorp.app;
 
+import com.digitalfuturescorp.app.utils.Validation;
+
 public class Contact {
     private String firstName;
     private String lastName;
@@ -40,6 +42,7 @@ public class Contact {
 
     public String validateEmail(String email) {
         if (email == null || email.trim().isEmpty()) throw new IllegalArgumentException("Email cannot be null or empty");
+        if(!Validation.matchesEmailRegEx(email)) throw new IllegalArgumentException("Email does not match required pattern");
         return email;
     }
 

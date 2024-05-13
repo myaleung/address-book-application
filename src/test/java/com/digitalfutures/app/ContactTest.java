@@ -168,7 +168,17 @@ public class ContactTest {
             //Act
             //Assert
             assertThrows(IllegalArgumentException.class,
-                    () -> new Contact(validFName, validLName, validEmail, "0121121"));
+                    () -> new Contact(validFName, validLName, validEmail, "121121"));
+        }
+
+        @Test
+        @DisplayName("Throw Exception when email address field does not have the correct format")
+        public void testConstructorThrowsExceptionWhenEmailAddressIsNotInCorrectFormat() {
+            //Arrange
+            //Act
+            //Assert
+            assertThrows(IllegalArgumentException.class,
+                    () -> new Contact(validFName, validLName, "e.@", validPhoneNumber));
         }
     }
 }
