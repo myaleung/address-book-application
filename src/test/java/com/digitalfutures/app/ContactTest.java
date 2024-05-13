@@ -3,19 +3,24 @@ package com.digitalfutures.app;
 import com.digitalfuturescorp.app.Contact;
 import org.junit.jupiter.api.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ContactTest {
     private Contact testContact;
+    private Contact testContact2;
     private final String validFName = "Amy";
     private final String validLName = "Leung";
     private final String validEmail = "email@email.com";
     private final String validPhoneNumber = "01234123123";
+    private String testFName = "Tess";
+    private String testLName = "Change";
+    private String testEmail = "tess@domain.com";
+    private String testPhoneNumber = "01222321321";
 
     @BeforeEach
     void setUp() {
         testContact = new Contact(validFName, validLName, validEmail, validPhoneNumber);
+        testContact2 = new Contact(testFName, testLName, testEmail, testPhoneNumber);
     }
 
     @AfterEach
@@ -182,5 +187,41 @@ public class ContactTest {
         }
     }
 
+    @Nested
+    @DisplayName("Contact Manipulation Tests")
+    class ContactManipulationTests {
+        @Test
+        @DisplayName("Should change contact entry first name")
+        public void testContactFirstNameIsChanged() {
+            //Arrange
+            String testName = "Tee";
+            String oldName = testContact2.getFirstName();
+            //Act
+            testContact2.setFirstName(testName);
+            String actualName = testContact2.getFirstName();
 
+            //Assert
+            assertAll(
+                    () -> assertEquals(testName, actualName),
+                    () -> assertNotEquals(oldName, actualName)
+            );
+        }
+
+        @Test
+        @DisplayName("Should change contact entry last name")
+        public void testContactLastNameIsChanged() {
+            //Arrange
+            String testName = "Changed";
+            String oldName = testContact2.getSurname();
+            //Act
+            testContact2.setSurname(testName);
+            String actualName = testContact2.getSurname();
+
+            //Assert
+            assertAll(
+                    () -> assertEquals(testName, actualName),
+                    () -> assertNotEquals(oldName, actualName)
+            );
+        }
+    }
 }

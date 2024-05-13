@@ -23,8 +23,16 @@ public class Contact {
         return this.firstName;
     }
 
+    public void setFirstName(String name) {
+        this.firstName = validateName(name);
+    }
+
     public String getSurname() {
         return this.lastName;
+    }
+
+    public void setSurname(String name) {
+        this.lastName = validateName(name);
     }
 
     public String getEmail() {
