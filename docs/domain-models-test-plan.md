@@ -7,16 +7,16 @@ The following are the user stories, class diagrams and tests for the Address Boo
 title: Address Book Software
 ---
 classDiagram
-    class com.digitalfuturescorp.app.AddressBook {
-        -contacts ArrayList<com.digitalfuturescorp.app.Contact>
+    class AddressBook {
+        -contacts ArrayList<Contact>
         +addContact(String, String, String, String) void
         +editContact() boolean
         +deleteContact() void
-        +search(String) com.digitalfuturescorp.app.Contact
+        +search(String) Contact
         +viewContacts() ArrayList
         +clearContacts() boolean
     }
-    class com.digitalfuturescorp.app.Contact {
+    class Contact {
         -fName String
         -lName String
         -email  String
