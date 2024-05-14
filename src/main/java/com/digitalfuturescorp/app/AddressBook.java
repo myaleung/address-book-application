@@ -12,6 +12,10 @@ public class AddressBook {
 
     public void addContact(Contact contactEntry) {
         if (Validation.isNull(contactEntry)) throw new IllegalArgumentException("Contact cannot be null");
+        for(Contact contact : contacts) {
+            if (contact.getEmail().contains(contactEntry.getEmail())) throw new IllegalArgumentException("Email already exists in contacts");
+            if (contact.getPhoneNumber().contains(contactEntry.getPhoneNumber())) throw new IllegalArgumentException("Phone number already exists in contacts");
+        }
         contacts.add(contactEntry);
     }
 

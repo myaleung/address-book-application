@@ -41,6 +41,31 @@ public class AddressBookTest {
         public void testShouldThrowExceptionWhenAddingNullContact() {
             assertThrows(IllegalArgumentException.class, ()->testAddressBook.addContact(null));
         }
+
+        @Test
+        @DisplayName("Should throw exception when a contact with the same email address exists in contacts")
+        public void testShouldThrowExceptionWhenSameEmailFoundInContactsList() {
+            //Arrange
+            Contact testEntry1 = spy(new Contact("Molly", "Ellis", "sa@me.com", "01121121123"));
+            Contact testEntry2 = spy(new Contact("Millie", "Brown", "sa@me.com", "01121121222"));
+
+            //Act
+            testAddressBook.addContact(testEntry1);
+            //Assert
+            assertThrows(IllegalArgumentException.class, ()->testAddressBook.addContact(testEntry2));
+        }
+
+        @Test
+        @DisplayName("Should throw exception when a contact with the same phone number exists in contacts")
+        public void testShouldThrowExceptionWhenSamePhoneNumberFoundInContactsList() {
+            //Arrange
+            Contact testEntry1 = spy(new Contact("Molly", "Ellis", "m@e.com", "01121121222"));
+            Contact testEntry2 = spy(new Contact("Millie", "Brown", "another@e.com", "01121121222"));
+            //Act
+            testAddressBook.addContact(testEntry1);
+            //Assert
+            assertThrows(IllegalArgumentException.class, ()->testAddressBook.addContact(testEntry2));
+        }
     }
 
     @Nested
