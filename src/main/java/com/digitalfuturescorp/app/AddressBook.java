@@ -3,9 +3,11 @@ package com.digitalfuturescorp.app;
 import com.digitalfuturescorp.app.utils.Validation;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class AddressBook {
-    private ArrayList<Contact> contacts = new ArrayList<Contact>();
+    private ArrayList<Contact> contacts = new ArrayList<>();
 
     public AddressBook() {
     }
@@ -21,6 +23,7 @@ public class AddressBook {
 
     public ArrayList<Contact> viewContacts() {
         if (contacts.isEmpty()) throw new IllegalStateException("Address book is empty");
+        Collections.sort(contacts);
         return contacts;
     }
 

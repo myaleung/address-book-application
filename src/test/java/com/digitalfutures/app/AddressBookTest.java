@@ -80,7 +80,33 @@ public class AddressBookTest {
             //Assert
             assertAll(
                     () -> assertEquals(2, testAddressBook.viewContacts().size()),
-                    () -> assertEquals("m@e.com", actualEmail)
+                    () -> assertEquals(testEntry2.getEmail(), actualEmail)
+            );
+        }
+
+        @Test
+        @DisplayName("Should show all contacts from address book in alphabetical order")
+        public void testShouldShowAllContactsInAlphabeticalOrder() {
+            //Arrange
+            Contact testEntry1 = spy(new Contact("Molly", "Ellis", "m@e.com", "01121121222"));
+            Contact testEntry2 = spy(new Contact("Millie", "Brown", "another@e.com", "01121121223"));
+            Contact testEntry3 = spy(new Contact("Josh", "Su", "joshsu@email.com", "07054538974"));
+            Contact testEntry4 = spy(new Contact("Toni", "Miller", "nini@email.com", "07441534951"));
+            Contact testEntry5 = spy(new Contact("Sam", "Lotte", "slotte@web.co.uk", "09427434606"));
+            testAddressBook.addContact(testEntry1);
+            testAddressBook.addContact(testEntry2);
+            testAddressBook.addContact(testEntry3);
+            testAddressBook.addContact(testEntry4);
+            testAddressBook.addContact(testEntry5);
+            //Act
+            String actualFirstResult = testAddressBook.viewContacts().get(0).getName();
+            String actualSecondResult = testAddressBook.viewContacts().get(1).getFirstName();
+            String actualLastResult = testAddressBook.viewContacts().get(testAddressBook.viewContacts().size() - 1).getName();
+            //Assert
+            assertAll(
+                    () -> assertEquals("Josh Su", actualFirstResult),
+                    () -> assertEquals("Millie", actualSecondResult),
+                    () -> assertEquals("Toni Miller", actualLastResult)
             );
         }
 

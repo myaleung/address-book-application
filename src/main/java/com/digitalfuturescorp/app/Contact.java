@@ -2,7 +2,7 @@ package com.digitalfuturescorp.app;
 
 import com.digitalfuturescorp.app.utils.Validation;
 
-public class Contact {
+public class Contact implements Comparable<Object> {
     private String firstName;
     private String lastName;
     private String email;
@@ -16,7 +16,7 @@ public class Contact {
     }
 
     public String getName() {
-        return this.firstName.concat(lastName);
+        return this.firstName.concat(" " + lastName);
     }
 
     public String getFirstName() {
@@ -66,5 +66,11 @@ public class Contact {
         if (Validation.isNull(phoneNumber) || Validation.isEmpty(phoneNumber)) throw new IllegalArgumentException("Phone number cannot be null or empty");
         if (!Validation.matchesPhoneNumberRegEx(phoneNumber)) throw new IllegalArgumentException("Phone number does not have 11 digits");
         return phoneNumber;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Contact c = (Contact) o;
+        return this.firstName.compareToIgnoreCase(c.firstName);
     }
 }
