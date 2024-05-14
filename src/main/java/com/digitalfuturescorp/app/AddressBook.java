@@ -39,6 +39,8 @@ public class AddressBook {
     }
 
     public void deleteContact(Contact contactToDelete) {
+        if (Validation.isNull(contactToDelete)) throw new IllegalArgumentException("Contact to delete cannot be null");
+        if (!contacts.contains(contactToDelete)) throw new IllegalArgumentException("Contact to delete does not exist");
         contacts.remove(contactToDelete);
     }
 }

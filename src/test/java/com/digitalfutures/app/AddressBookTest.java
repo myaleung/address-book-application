@@ -79,8 +79,8 @@ public class AddressBookTest {
             String actualEmail = testAddressBook.viewContacts().get(0).getEmail();
             //Assert
             assertAll(
-                    () -> assertEquals(2, testAddressBook.viewContacts().size()),
-                    () -> assertEquals(testEntry2.getEmail(), actualEmail)
+                () -> assertEquals(2, testAddressBook.viewContacts().size()),
+                () -> assertEquals(testEntry2.getEmail(), actualEmail)
             );
         }
 
@@ -104,9 +104,9 @@ public class AddressBookTest {
             String actualLastResult = testAddressBook.viewContacts().get(testAddressBook.viewContacts().size() - 1).getName();
             //Assert
             assertAll(
-                    () -> assertEquals("Josh Su", actualFirstResult),
-                    () -> assertEquals("Millie", actualSecondResult),
-                    () -> assertEquals("Toni Miller", actualLastResult)
+                () -> assertEquals("Josh Su", actualFirstResult),
+                () -> assertEquals("Millie", actualSecondResult),
+                () -> assertEquals("Toni Miller", actualLastResult)
             );
         }
 
@@ -215,8 +215,22 @@ public class AddressBookTest {
             testAddressBook.deleteContact(testEntry2);
             //Assert
             assertAll(
+                () -> assertEquals(1,testAddressBook.viewContacts().size()),
+                () -> assertFalse(testAddressBook.viewContacts().contains(testEntry2))
+            );
+        }
+
+        @Test
+        @DisplayName("Should not delete a non-existing contact")
+        public void testShouldNotDeleteANonExistingContact() {
+            //Arrange
+            testAddressBook.addContact(testEntry1);
+            //Act
+            //Assert
+            assertAll(
                     () -> assertEquals(1,testAddressBook.viewContacts().size()),
-                    () -> assertFalse(testAddressBook.viewContacts().contains(testEntry2))
+                    () -> assertThrows(IllegalArgumentException.class, ()->testAddressBook.deleteContact(null)),
+                    () -> assertThrows(IllegalArgumentException.class, ()->testAddressBook.deleteContact(testEntry2))
             );
         }
     }
