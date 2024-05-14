@@ -67,7 +67,8 @@ public class AddressBookTest {
             assertThrows(IllegalArgumentException.class, ()->testAddressBook.addContact(testEntry2));
         }
 
-        @Test@DisplayName("Should show all contacts in the address book")
+        @Test
+        @DisplayName("Should show all contacts in the address book")
         public void testShouldShowAllContactsInArrayList() {
             //Arrange
             Contact testEntry1 = spy(new Contact("Molly", "Ellis", "m@e.com", "01121121222"));
@@ -82,6 +83,16 @@ public class AddressBookTest {
                     () -> assertEquals("m@e.com", actualEmail)
             );
         }
+
+        @Test
+        @DisplayName("Should throw exception when trying to view an empty address book")
+        public void testThrowExceptionWhenViewingEmptyAddressBook() {
+            //Arrange
+            //Act
+            //Assert
+            assertThrows(IllegalStateException.class, ()->testAddressBook.viewContacts());
+        }
+
     }
 
     @Nested

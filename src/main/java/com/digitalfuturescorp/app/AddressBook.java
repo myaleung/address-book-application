@@ -20,6 +20,7 @@ public class AddressBook {
     }
 
     public ArrayList<Contact> viewContacts() {
+        if (contacts.isEmpty()) throw new IllegalStateException("Address book is empty");
         return contacts;
     }
 
