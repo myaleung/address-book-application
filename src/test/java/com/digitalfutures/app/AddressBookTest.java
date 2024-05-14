@@ -33,7 +33,7 @@ public class AddressBookTest {
             //Act
             testAddressBook.addContact(testContact);
             //Assert
-            Assertions.assertEquals(1, testAddressBook.viewContacts().size());
+            assertEquals(1, testAddressBook.viewContacts().size());
         }
 
         @Test
@@ -66,6 +66,22 @@ public class AddressBookTest {
             //Assert
             assertThrows(IllegalArgumentException.class, ()->testAddressBook.addContact(testEntry2));
         }
+
+        @Test@DisplayName("Should show all contacts in the address book")
+        public void testShouldShowAllContactsInArrayList() {
+            //Arrange
+            Contact testEntry1 = spy(new Contact("Molly", "Ellis", "m@e.com", "01121121222"));
+            Contact testEntry2 = spy(new Contact("Millie", "Brown", "another@e.com", "01121121223"));
+            testAddressBook.addContact(testEntry1);
+            testAddressBook.addContact(testEntry2);
+            //Act
+            String actualEmail = testAddressBook.viewContacts().get(0).getEmail();
+            //Assert
+            assertAll(
+                    () -> assertEquals(2, testAddressBook.viewContacts().size()),
+                    () -> assertEquals("m@e.com", actualEmail)
+            );
+        }
     }
 
     @Nested
@@ -94,7 +110,7 @@ public class AddressBookTest {
             testAddressBook.addContact(testEntry);
             //Act
             //Assert
-            Assertions.assertEquals(testEntry, testAddressBook.searchContacts(searchName));
+            assertEquals(testEntry, testAddressBook.searchContacts(searchName));
         }
 
         @Test
@@ -117,7 +133,7 @@ public class AddressBookTest {
             testAddressBook.addContact(testEntry);
             //Act
             //Assert
-            Assertions.assertEquals(testEntry, testAddressBook.searchContacts(searchName));
+            assertEquals(testEntry, testAddressBook.searchContacts(searchName));
         }
 
         @Test
@@ -128,7 +144,7 @@ public class AddressBookTest {
             testAddressBook.addContact(testEntry);
             //Act
             //Assert
-            Assertions.assertNull(testAddressBook.searchContacts(searchName));
+            assertNull(testAddressBook.searchContacts(searchName));
         }
     }
 
