@@ -4,7 +4,6 @@ import com.digitalfuturescorp.app.utils.Validation;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 public class AddressBook {
     private ArrayList<Contact> contacts = new ArrayList<>();
@@ -31,7 +30,7 @@ public class AddressBook {
         if (Validation.isNull(searchTerm) || Validation.isEmpty(searchTerm)) throw new IllegalArgumentException("Search term cannot be null or empty");
         Contact result = null;
         for(Contact contact : contacts) {
-            if (contact.getName().contains(searchTerm)) {
+            if (contact.getName().toLowerCase().contains(searchTerm.toLowerCase())) {
                 result = contact;
             }
         }

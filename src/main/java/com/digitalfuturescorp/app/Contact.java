@@ -73,4 +73,14 @@ public class Contact implements Comparable<Object> {
         Contact c = (Contact) o;
         return this.firstName.compareToIgnoreCase(c.firstName);
     }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                ", FirstName='" + firstName + '\'' +
+                ", Surname=" + lastName +
+                ", Email=" + email +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                "} ";
+    }
 }
