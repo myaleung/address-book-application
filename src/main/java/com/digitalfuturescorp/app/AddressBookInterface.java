@@ -31,7 +31,7 @@ public class AddressBookInterface {
             String option = theScanner.nextLine();
             selectedOption(option);
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -40,7 +40,7 @@ public class AddressBookInterface {
             switch(option) {
                 case "1":
                     //go to add a new contact
-                    gotToAddNewContact();
+                    goToAddNewContact();
                     break;
                 case "2":
                     //go to edit a contact
@@ -69,7 +69,7 @@ public class AddressBookInterface {
                     break;
             }
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -86,11 +86,11 @@ public class AddressBookInterface {
             System.out.println("Your address book is currently empty.");
             routeTheUser();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
-    private void gotToAddNewContact() {
+    private void goToAddNewContact() {
         try {
             System.out.println("""
                     Adding a new contact:
@@ -105,15 +105,23 @@ public class AddressBookInterface {
             String phoneNumber = theScanner.nextLine();
             addNewContact(fName, lName, email, phoneNumber);
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
     private void addNewContact(String fName, String lName, String email, String phoneNumber) {
-        Contact newContact = new Contact(fName, lName, email, phoneNumber);
-        addressBook.addContact(newContact);
-        System.out.println("New contact added");
-        routeTheUser();
+        try {
+            Contact newContact = new Contact(fName, lName, email, phoneNumber);
+            addressBook.addContact(newContact);
+            System.out.println("New contact added");
+            routeTheUser();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Please try again.");
+            goToAddNewContact();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     private void goToEditContacts() {
@@ -127,7 +135,7 @@ public class AddressBookInterface {
             System.out.println("Cannot find contact to edit.");
             routeTheUser();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -138,39 +146,43 @@ public class AddressBookInterface {
     }
 
     private void editContact(String option, Contact contact) {
-        switch (option) {
-            case "1":
-                //edit first name
-                System.out.println("Enter new first name:");
-                contact.setFirstName(theScanner.nextLine());
-                System.out.println("Contact Updated");
-                routeTheUser();
-                break;
-            case "2":
-                //edit last name
-                System.out.println("Enter new surname:");
-                contact.setSurname(theScanner.nextLine());
-                System.out.println("Contact Updated");
-                routeTheUser();
-                break;
-            case "3":
-                //edit email address
-                System.out.println("Enter new email address:");
-                contact.setEmail(theScanner.nextLine());
-                System.out.println("Contact Updated");
-                routeTheUser();
-                break;
-            case "4":
-                //edit phone number
-                System.out.println("Enter new phone number:");
-                contact.setPhoneNumber(theScanner.nextLine());
-                System.out.println("Contact Updated");
-                routeTheUser();
-                break;
-            default:
-                System.out.println("Invalid option.");
-                editContactChoice(contact.getName(), contact);
-                break;
+        try {
+            switch (option) {
+                case "1":
+                    //edit first name
+                    System.out.println("Enter new first name:");
+                    contact.setFirstName(theScanner.nextLine());
+                    System.out.println("Contact Updated");
+                    routeTheUser();
+                    break;
+                case "2":
+                    //edit last name
+                    System.out.println("Enter new surname:");
+                    contact.setSurname(theScanner.nextLine());
+                    System.out.println("Contact Updated");
+                    routeTheUser();
+                    break;
+                case "3":
+                    //edit email address
+                    System.out.println("Enter new email address:");
+                    contact.setEmail(theScanner.nextLine());
+                    System.out.println("Contact Updated");
+                    routeTheUser();
+                    break;
+                case "4":
+                    //edit phone number
+                    System.out.println("Enter new phone number:");
+                    contact.setPhoneNumber(theScanner.nextLine());
+                    System.out.println("Contact Updated");
+                    routeTheUser();
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+                    editContactChoice(contact.getName(), contact);
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -186,7 +198,7 @@ public class AddressBookInterface {
             System.out.println("Cannot find contact to delete.");
             routeTheUser();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -203,7 +215,7 @@ public class AddressBookInterface {
             }
             routeTheUser();
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -230,13 +242,13 @@ public class AddressBookInterface {
                     break;
             }
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
     private void exitProgram() {
         theScanner.close();
-        System.out.println("Thank you for using DF Corp Address Book. Good Bye.");
+        System.out.println("Thank you for using DF Corp Address Book. Goodbye.");
         System.exit(0);
     }
 }

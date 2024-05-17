@@ -40,7 +40,6 @@ public class AddressBookInterfaceTest {
             when(scanner.nextLine()).thenReturn("4", "0");
             testInterface.start(scanner);
             assertAll(
-                    () -> assertEquals("4", scanner.nextLine()),
                     () -> assertTrue(testAddressBook.viewContacts().isEmpty())
             );
         }
