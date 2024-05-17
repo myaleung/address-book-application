@@ -21,25 +21,25 @@ public class AddressBookInterface {
 
     public void mainMenu() {
             try {
-                String message = """
-                Please select and enter a number from the following options:\r
-                    1. Add a contact\r
-                    2. Edit a contact\r
-                    3. Delete a contact\r
-                    4. View all contacts\r
-                    5. Search for a contact by name\n
-                     or 0 to exit program
-                """;
-                System.out.println(message);
-                if(Validation.matchesMainMenuOptionRegEx(theScanner.nextLine())) {
-                    selectedOption(theScanner.next());
-                } else {
-                    System.out.println("That's not a valid option. Please select a number from the menu.");
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("That's not a valid option. Please select a number from the menu.");
-            } catch (IllegalArgumentException e) {
-                System.out.println("That's not a valid option. Please select a number from the menu.");
+                do {
+                    String message = """
+                    Please select and enter a number from the following options:\r
+                        1. Add a contact\r
+                        2. Edit a contact\r
+                        3. Delete a contact\r
+                        4. View all contacts\r
+                        5. Search for a contact by name\n
+                         or 0 to exit program
+                    """;
+                    System.out.println(message);
+                    String option = theScanner.nextLine();
+                    if (Validation.matchesMainMenuOptionRegEx(option)) {
+                        selectedOption(option);
+                        break;
+                    } else {
+                        System.out.println("Invalid option.");
+                    }
+                } while (true);
             } catch (Exception e) {
                 System.out.println(e);
             }
@@ -195,23 +195,32 @@ public class AddressBookInterface {
     }
 
     private void routeTheUser() {
-        do {
-            System.out.println("""
-            What would you like to do next?\r
-               1 . Go back to main menu\r
-               0 . Exit program 
-            """);
-
-            switch (theScanner.nextLine()) {
-                case "1":
-                    mainMenu();
-                    break;
-                case "0":
-                    //closes program
-                    exitProgram();
-                    break;
-            }
-        } while (!Validation.matchesExitMenuOptionRegEx(theScanner.nextLine()));
+        try {
+            do {
+                String message = """
+                What would you like to do next?\r
+                   1 . Go back to main menu\r
+                   0 . Exit program 
+                """;
+                System.out.println(message);
+                String option = theScanner.nextLine();
+                if (Validation.matchesExitMenuOptionRegEx(option)) {
+                    switch (option) {
+                        case "1":
+                            mainMenu();
+                            break;
+                        case "0":
+                            //closes program
+                            exitProgram();
+                            break;
+                    }
+                } else {
+                    System.out.println("Invalid option.");
+                }
+            } while (true);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     private void exitProgram() {
