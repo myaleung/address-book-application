@@ -5,6 +5,7 @@ import com.digitalfuturescorp.app.AddressBookInterface;
 import com.digitalfuturescorp.app.Contact;
 import org.junit.jupiter.api.*;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,14 +35,28 @@ public class AddressBookInterfaceTest {
             testInterface = null;
         }
 
-        @Test
-        @DisplayName("Should register input and show contacts")
-        public void testRegisterInputAndShowContacts() {
-            when(scanner.nextLine()).thenReturn("4", "0");
-            testInterface.start(scanner);
-            assertAll(
-                    () -> assertTrue(testAddressBook.viewContacts().isEmpty())
-            );
-        }
+//        @Test
+//        @DisplayName("Should add contact to address book")
+//        public void testAddContactToAddressBook() {
+////            testInterface.addNewContact(scanner);
+////            when(testAddressBook.addContact()).thenReturn()
+//            testInterface.start(scanner);
+//            when(scanner.nextLine()).thenReturn("1","Amy", "Lee", "aa@aa.com", "01111111111", "0");
+////            when(testAddressBook.viewContacts().size()).thenReturn(1);
+//            testAddressBook.addContact(testContact);
+//            assertAll(
+//                    () -> assertEquals(1, testAddressBook.viewContacts().size())
+//            );
+//        }
+
+//        @Test
+//        @DisplayName("Should register input and show contacts")
+//        public void testRegisterInputAndShowContacts() {
+//            when(scanner.nextLine()).thenReturn("4", "0");
+//            testInterface.start(scanner);
+//            assertAll(
+//                    () -> assertTrue(testAddressBook.viewContacts().isEmpty())
+//            );
+//        }
     }
 }

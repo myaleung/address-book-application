@@ -29,3 +29,8 @@ The risks that the software may have for the business include,
 - **Data Expansion:** Although the basic information of a contact is kept there isn't a way to increase the field capacity of the address book information.
 - **Software Integration:** The software is currently an app on a computer and hasn't been tested on a phone and thus may not be compatible with the phone app system to easily call contacts from. Email addresses stored on the system also aren't linked and therefore won't open an email provider to compose a message.
 - **International Numbers:** Currently the software handles UK numbers and matches format of numbers to 11 digits. Therefore, it won't be able to handle international phone numbers yet.
+- **Editing and deleting contacts:** The software currently only returns the first match from the search term and will edit or delete the first contact in the list. This may therefore not be the contact the user wants to edit or delete. 
+- **Multiple details:** If a user wanted to add multiple phone numbers, such as for mobile, work and home, or email addresses to a contact, the software currently doesn't allow this and only stores one of each.
+
+### Conclusion
+The address book software is a new product that will help users organise their contacts in one place. It would help them store and find information quickly and easily. However, there are some risks that need to be addressed before the software can be launched to the public. These include the software's compatibility with other devices and the ability to store multiple details for a contact. If I had time and were to continue working on this software, I would look to address these risks and improve the software to make it more user friendly and efficient.
