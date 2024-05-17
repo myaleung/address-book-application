@@ -35,7 +35,7 @@ public class ContactTest {
         @DisplayName("Name is set by constructor")
         public void testNameSetByConstructor() {
             //Arrange
-            String expectedName = validFName + validLName;
+            String expectedName = validFName + " " + validLName;
             //Act
             String actualName = testContact.getName();
             //Assert

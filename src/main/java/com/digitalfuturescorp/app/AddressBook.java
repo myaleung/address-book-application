@@ -26,15 +26,15 @@ public class AddressBook {
         return contacts;
     }
 
-    public Contact searchContacts(String searchTerm) {
+    public ArrayList<Contact> searchContacts(String searchTerm) {
         if (Validation.isNull(searchTerm) || Validation.isEmpty(searchTerm)) throw new IllegalArgumentException("Search term cannot be null or empty");
-        Contact result = null;
+        ArrayList<Contact> results = new ArrayList<>();
         for(Contact contact : contacts) {
             if (contact.getName().toLowerCase().contains(searchTerm.toLowerCase())) {
-                result = contact;
+                results.add(contact);
             }
         }
-        return result;
+        return results;
     }
 
     public void deleteContact(Contact contactToDelete) {

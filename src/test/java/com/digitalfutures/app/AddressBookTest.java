@@ -147,7 +147,7 @@ public class AddressBookTest {
             testAddressBook.addContact(testEntry);
             //Act
             //Assert
-            assertEquals(testEntry, testAddressBook.searchContacts(searchName));
+            assertTrue(testAddressBook.searchContacts(searchName).contains(testEntry));
         }
 
         @Test
@@ -170,7 +170,7 @@ public class AddressBookTest {
             testAddressBook.addContact(testEntry);
             //Act
             //Assert
-            assertEquals(testEntry, testAddressBook.searchContacts(searchName));
+            assertTrue(testAddressBook.searchContacts(searchName).contains(testEntry));
         }
 
         @Test
@@ -181,7 +181,11 @@ public class AddressBookTest {
             testAddressBook.addContact(testEntry);
             //Act
             //Assert
-            assertNull(testAddressBook.searchContacts(searchName));
+            assertAll(
+                    () -> assertFalse(testAddressBook.searchContacts(searchName).contains(testEntry)),
+                    () -> assertTrue(testAddressBook.searchContacts(searchName).isEmpty()),
+                    () -> assertEquals(0, testAddressBook.searchContacts(searchName).size())
+            );
         }
     }
 

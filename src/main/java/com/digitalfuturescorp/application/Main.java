@@ -9,8 +9,9 @@ public class Main {
     public static void main(String[] args) {
         AddressBook addressBook = new AddressBook();
         AddressBookInterface dfAddressBook = new AddressBookInterface(addressBook);
+        Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome to your DF Corp AddressBook");
-        dfAddressBook.mainMenu();
+        dfAddressBook.start(scanner);
     }
 }

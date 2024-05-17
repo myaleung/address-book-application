@@ -1,5 +1,7 @@
 package com.digitalfuturescorp.app;
 
+import com.digitalfuturescorp.app.utils.Validation;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -12,63 +14,63 @@ public class AddressBookInterface {
         this.addressBook = addressBook;
     }
 
-    public void start(Scanner testScanner) {
-        if (testScanner != null) {
-            this.theScanner = testScanner;
-        } else {
-            this.theScanner = new Scanner(System.in);
-        }
+    public void start(Scanner aScanner) {
+        this.theScanner = aScanner;
         mainMenu();
     }
 
     public void mainMenu() {
-        try {
-            String message = """
-                Please select and enter a number from the following options:
-                    1. View all contacts
-                    2. Add a contact
-                    3. Edit a contact
-                    4. Delete a contact
-                    5. Search for a contact by name
-                     
-                     or any other number to exit program
+            try {
+                String message = """
+                Please select and enter a number from the following options:\r
+                    1. Add a contact\r
+                    2. Edit a contact\r
+                    3. Delete a contact\r
+                    4. View all contacts\r
+                    5. Search for a contact by name\n
+                     or 0 to exit program
                 """;
-            System.out.println(message);
-            String selection = theScanner.nextLine();
-//            selectedOption(selection);
-        } catch (InputMismatchException e) {
-            System.out.println("That's not a valid option");
-        }
+                System.out.println(message);
+                if(Validation.matchesMainMenuOptionRegEx(theScanner.nextLine())) {
+                    selectedOption(theScanner.next());
+                } else {
+                    System.out.println("That's not a valid option. Please select a number from the menu.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("That's not a valid option. Please select a number from the menu.");
+            } catch (IllegalArgumentException e) {
+                System.out.println("That's not a valid option. Please select a number from the menu.");
+            } catch (Exception e) {
+                System.out.println(e);
+            }
     }
 
     public void selectedOption(String option) {
         try {
             switch(option) {
                 case "1":
-                    //go to view contacts
-                    goToViewContacts();
-                    break;
-                case "2":
                     //go to add a new contact
                     gotToAddNewContact();
                     break;
-                case "3":
+                case "2":
                     //go to edit a contact
                     goToEditContacts();
                     break;
-                case "4":
+                case "3":
                     //go to delete a contact
                     gotToDeleteContact();
+                    break;
+                case "4":
+                    //go to view contacts
+                    goToViewContacts();
                     break;
                 case "5":
                     //go to search for a contact
                     gotToSearchContact();
                     break;
-                default:
+                case "0":
                     //closes program
-                    theScanner.close();
-                    System.out.println("Thank you for using DF Corp Address Book. Good Bye.");
-                    System.exit(0);
+                    exitProgram();
                     break;
             }
         } catch (Exception e) {
@@ -78,12 +80,12 @@ public class AddressBookInterface {
 
     private void goToViewContacts() {
         try {
-            System.out.print("Here are all the contacts in your address book:");
+            System.out.println("Here are all the contacts in your address book:");
             ArrayList<Contact> myAddressBook = addressBook.viewContacts();
             for(Contact contact : myAddressBook) {
                 System.out.println(contact);
             }
-            mainMenu();
+            routeTheUser();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -95,13 +97,13 @@ public class AddressBookInterface {
                     Adding a new contact:
                     Please enter their first name:
                     """);
-            String fName = theScanner.next();
+            String fName = theScanner.nextLine();
             System.out.println("Please enter their surname:");
-            String lName = theScanner.next();
+            String lName = theScanner.nextLine();
             System.out.println("Please enter their email address:");
-            String email = theScanner.next();
+            String email = theScanner.nextLine();
             System.out.println("Please enter their phone number:");
-            String phoneNumber = theScanner.next();
+            String phoneNumber = theScanner.nextLine();
             addNewContact(fName, lName, email, phoneNumber);
         } catch (Exception e) {
             System.out.println(e);
@@ -112,18 +114,18 @@ public class AddressBookInterface {
         Contact newContact = new Contact(fName, lName, email, phoneNumber);
         addressBook.addContact(newContact);
         System.out.println("New contact added");
-        mainMenu();
+        routeTheUser();
     }
 
     private void goToEditContacts() {
         try {
             System.out.print("Enter the name of the contact you wish to edit:");
-            String editContactSearch = theScanner.next();
-            Contact contactResult = addressBook.searchContacts(editContactSearch);
-            String contactResultName = contactResult.getName();
-            System.out.printf("I've found %s, what field would you like to edit? %n 1. First Name %n 2. Surname %n 3. Email Address %n 4. Phone Number", contactResultName);
+            String editContactSearch = theScanner.nextLine();
+            ArrayList<Contact> contactResults = addressBook.searchContacts(editContactSearch);
+            String contactResultName = contactResults.get(0).getName();
+            System.out.printf("I've found %s, what field would you like to edit? %n 1. First Name %n 2. Surname %n 3. Email Address %n 4. Phone Number %n", contactResultName);
             String editOption = theScanner.nextLine();
-            editContact(editOption, contactResult);
+            editContact(editOption, contactResults.get(0));
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -134,30 +136,30 @@ public class AddressBookInterface {
             case "1":
                 //edit first name
                 System.out.println("Enter new first name:");
-                result.setFirstName(theScanner.next());
+                result.setFirstName(theScanner.nextLine());
                 System.out.println("Contact Updated");
-                mainMenu();
+                routeTheUser();
                 break;
             case "2":
                 //edit last name
                 System.out.println("Enter new surname:");
-                result.setSurname(theScanner.next());
+                result.setSurname(theScanner.nextLine());
                 System.out.println("Contact Updated");
-                mainMenu();
+                routeTheUser();
                 break;
             case "3":
                 //edit email address
                 System.out.println("Enter new email address:");
-                result.setEmail(theScanner.next());
+                result.setEmail(theScanner.nextLine());
                 System.out.println("Contact Updated");
-                mainMenu();
+                routeTheUser();
                 break;
             case "4":
                 //edit phone number
                 System.out.println("Enter new phone number:");
-                result.setPhoneNumber(theScanner.next());
+                result.setPhoneNumber(theScanner.nextLine());
                 System.out.println("Contact Updated");
-                mainMenu();
+                routeTheUser();
                 break;
         }
     }
@@ -165,12 +167,11 @@ public class AddressBookInterface {
     private void gotToDeleteContact() {
         try {
             System.out.print("Enter the name of the contact you wish to delete:");
-            String contactToDelete = theScanner.next();
-            Contact contactToDeleteSearch = addressBook.searchContacts(contactToDelete);
-            String contactToDeleteResultName = contactToDeleteSearch.getName();
+            String contactToDelete = theScanner.nextLine();
+            Contact contactToDeleteSearch = addressBook.searchContacts(contactToDelete).get(0);
             addressBook.deleteContact(contactToDeleteSearch);
-            System.out.printf("Contact %s deleted", contactToDeleteResultName);
-            mainMenu();
+            System.out.printf("Contact %s deleted.%n", contactToDeleteSearch.getName());
+            routeTheUser();
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -178,13 +179,44 @@ public class AddressBookInterface {
 
     private void gotToSearchContact() {
         try {
-            System.out.print("Enter the name of the contact:");
-            String searchName = theScanner.next();
-            Contact searchResults = addressBook.searchContacts(searchName);
-            System.out.println(searchResults);
-            mainMenu();
+            System.out.println("Enter the name of the contact:");
+            String searchName = theScanner.nextLine();
+            ArrayList<Contact> searchResults = addressBook.searchContacts(searchName);
+            if (searchResults.isEmpty()) {
+                System.out.println("Found no matching contact");
+            } else {
+                System.out.println("Found matching contact/s:");
+                System.out.println(searchResults);
+            }
+            routeTheUser();
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    private void routeTheUser() {
+        do {
+            System.out.println("""
+            What would you like to do next?\r
+               1 . Go back to main menu\r
+               0 . Exit program 
+            """);
+
+            switch (theScanner.nextLine()) {
+                case "1":
+                    mainMenu();
+                    break;
+                case "0":
+                    //closes program
+                    exitProgram();
+                    break;
+            }
+        } while (!Validation.matchesExitMenuOptionRegEx(theScanner.nextLine()));
+    }
+
+    private void exitProgram() {
+        theScanner.close();
+        System.out.println("Thank you for using DF Corp Address Book. Good Bye.");
+        System.exit(0);
     }
 }

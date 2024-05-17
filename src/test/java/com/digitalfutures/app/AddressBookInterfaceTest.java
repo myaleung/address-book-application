@@ -18,13 +18,14 @@ public class AddressBookInterfaceTest {
         private AddressBookInterface testInterface;
         private AddressBook testAddressBook;
         private Contact testContact;
+        private Scanner scanner;
 
         @BeforeEach
         void setUp() {
             testAddressBook = mock(AddressBook.class);
             testContact = mock(Contact.class);
             testInterface = new AddressBookInterface(testAddressBook);
-        }
+            scanner = mock(Scanner.class);        }
 
         @AfterEach
         void tearDown() {
@@ -36,26 +37,12 @@ public class AddressBookInterfaceTest {
         @Test
         @DisplayName("Should register input and show contacts")
         public void testRegisterInputAndShowContacts() {
-            Scanner scanner = mock(Scanner.class);
-            when(scanner.nextLine()).thenReturn("1");
+            when(scanner.nextLine()).thenReturn("4", "0");
             testInterface.start(scanner);
             assertAll(
-                    () -> assertEquals("1", scanner.nextLine()),
+                    () -> assertEquals("4", scanner.nextLine()),
                     () -> assertTrue(testAddressBook.viewContacts().isEmpty())
             );
         }
-
-//        @Test
-//        @DisplayName("Should register input and show correct menu")
-//        public void testInputAndShowCorrespondingMenu() {
-//            //Arrange
-//            final int testOption = KeyEvent.VK_1;
-//            //Act
-//            testInterface.selectedOption(testOption);
-//            //Assert
-//            assertAll(
-//                    () -> assertEquals(2, testAddressBook.viewContacts().size())
-//            );
-//        }
     }
 }

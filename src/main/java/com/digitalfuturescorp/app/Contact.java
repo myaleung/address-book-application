@@ -77,7 +77,7 @@ public class Contact implements Comparable<Object> {
     @Override
     public String toString() {
         return "Contact{" +
-                ", FirstName='" + firstName + '\'' +
+                "FirstName='" + firstName + '\'' +
                 ", Surname=" + lastName +
                 ", Email=" + email +
                 ", phoneNumber='" + phoneNumber + '\'' +
