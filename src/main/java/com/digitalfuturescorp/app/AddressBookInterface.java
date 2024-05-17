@@ -1,13 +1,10 @@
 package com.digitalfuturescorp.app;
 
-import com.digitalfuturescorp.app.utils.Validation;
-
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AddressBookInterface {
-    private AddressBook addressBook;
+    private final AddressBook addressBook;
     private Scanner theScanner;
 
     public AddressBookInterface(AddressBook addressBook) {
@@ -20,29 +17,22 @@ public class AddressBookInterface {
     }
 
     public void mainMenu() {
-            try {
-                do {
-                    String message = """
-                    Please select and enter a number from the following options:\r
-                        1. Add a contact\r
-                        2. Edit a contact\r
-                        3. Delete a contact\r
-                        4. View all contacts\r
-                        5. Search for a contact by name\n
-                         or 0 to exit program
-                    """;
-                    System.out.println(message);
-                    String option = theScanner.nextLine();
-                    if (Validation.matchesMainMenuOptionRegEx(option)) {
-                        selectedOption(option);
-                        break;
-                    } else {
-                        System.out.println("Invalid option.");
-                    }
-                } while (true);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+        try {
+            String message = """
+            Please select and enter a number from the following options:\r
+                1. Add a contact\r
+                2. Edit a contact\r
+                3. Delete a contact\r
+                4. View all contacts\r
+                5. Search for a contact by name\n
+                 or 0 to exit program
+            """;
+            System.out.println(message);
+            String option = theScanner.nextLine();
+            selectedOption(option);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     public void selectedOption(String option) {
@@ -72,6 +62,11 @@ public class AddressBookInterface {
                     //closes program
                     exitProgram();
                     break;
+                default:
+                    //go back to main menu
+                    System.out.println("Invalid option.");
+                    mainMenu();
+                    break;
             }
         } catch (Exception e) {
             System.out.println(e);
@@ -81,10 +76,14 @@ public class AddressBookInterface {
     private void goToViewContacts() {
         try {
             System.out.println("Here are all the contacts in your address book:");
+            System.out.println(addressBook.viewContacts());
             ArrayList<Contact> myAddressBook = addressBook.viewContacts();
             for(Contact contact : myAddressBook) {
                 System.out.println(contact);
             }
+            routeTheUser();
+        } catch (IllegalStateException e) {
+            System.out.println("Your address book is currently empty.");
             routeTheUser();
         } catch (Exception e) {
             System.out.println(e);
@@ -119,47 +118,58 @@ public class AddressBookInterface {
 
     private void goToEditContacts() {
         try {
-            System.out.print("Enter the name of the contact you wish to edit:");
+            System.out.println("Enter the name of the contact you wish to edit:");
             String editContactSearch = theScanner.nextLine();
             ArrayList<Contact> contactResults = addressBook.searchContacts(editContactSearch);
             String contactResultName = contactResults.get(0).getName();
-            System.out.printf("I've found %s, what field would you like to edit? %n 1. First Name %n 2. Surname %n 3. Email Address %n 4. Phone Number %n", contactResultName);
-            String editOption = theScanner.nextLine();
-            editContact(editOption, contactResults.get(0));
+            editContactChoice(contactResultName, contactResults.get(0));
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Cannot find contact to edit.");
+            routeTheUser();
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    private void editContact(String option, Contact result) {
+    private void editContactChoice(String contactName, Contact contact) {
+        System.out.printf("Editing contact: %s. What field would you like to edit? %n 1. First Name %n 2. Surname %n 3. Email Address %n 4. Phone Number %n", contactName);
+        String editOption = theScanner.nextLine();
+        editContact(editOption, contact);
+    }
+
+    private void editContact(String option, Contact contact) {
         switch (option) {
             case "1":
                 //edit first name
                 System.out.println("Enter new first name:");
-                result.setFirstName(theScanner.nextLine());
+                contact.setFirstName(theScanner.nextLine());
                 System.out.println("Contact Updated");
                 routeTheUser();
                 break;
             case "2":
                 //edit last name
                 System.out.println("Enter new surname:");
-                result.setSurname(theScanner.nextLine());
+                contact.setSurname(theScanner.nextLine());
                 System.out.println("Contact Updated");
                 routeTheUser();
                 break;
             case "3":
                 //edit email address
                 System.out.println("Enter new email address:");
-                result.setEmail(theScanner.nextLine());
+                contact.setEmail(theScanner.nextLine());
                 System.out.println("Contact Updated");
                 routeTheUser();
                 break;
             case "4":
                 //edit phone number
                 System.out.println("Enter new phone number:");
-                result.setPhoneNumber(theScanner.nextLine());
+                contact.setPhoneNumber(theScanner.nextLine());
                 System.out.println("Contact Updated");
                 routeTheUser();
+                break;
+            default:
+                System.out.println("Invalid option.");
+                editContactChoice(contact.getName(), contact);
                 break;
         }
     }
@@ -171,6 +181,9 @@ public class AddressBookInterface {
             Contact contactToDeleteSearch = addressBook.searchContacts(contactToDelete).get(0);
             addressBook.deleteContact(contactToDeleteSearch);
             System.out.printf("Contact %s deleted.%n", contactToDeleteSearch.getName());
+            routeTheUser();
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Cannot find contact to delete.");
             routeTheUser();
         } catch (Exception e) {
             System.out.println(e);
@@ -196,28 +209,26 @@ public class AddressBookInterface {
 
     private void routeTheUser() {
         try {
-            do {
-                String message = """
-                What would you like to do next?\r
-                   1 . Go back to main menu\r
-                   0 . Exit program 
-                """;
-                System.out.println(message);
-                String option = theScanner.nextLine();
-                if (Validation.matchesExitMenuOptionRegEx(option)) {
-                    switch (option) {
-                        case "1":
-                            mainMenu();
-                            break;
-                        case "0":
-                            //closes program
-                            exitProgram();
-                            break;
-                    }
-                } else {
+            String message = """
+            What would you like to do next?\r
+               1 . Go back to main menu\r
+               0 . Exit program
+            """;
+            System.out.println(message);
+            String option = theScanner.nextLine();
+            switch (option) {
+                case "1":
+                    mainMenu();
+                    break;
+                case "0":
+                    //closes program
+                    exitProgram();
+                    break;
+                default:
                     System.out.println("Invalid option.");
-                }
-            } while (true);
+                    routeTheUser();
+                    break;
+            }
         } catch (Exception e) {
             System.out.println(e);
         }
