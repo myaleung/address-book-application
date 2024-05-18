@@ -85,7 +85,10 @@ public class AddressBookInterfaceTest {
             //Act
             testInterface.start(scanner);
             //Assert
-            verify(testAddressBook, times(1)).editContact(testContact, "firstname", "New Name");
+            assertAll(
+                    () -> verify(testContact, times(1)).setFirstName(anyString()),
+                    () -> verify(testAddressBook, times(1)).searchContacts(anyString())
+            );
         }
 
         @Test
@@ -116,7 +119,8 @@ public class AddressBookInterfaceTest {
             testInterface.editContactChoice(testEntry1.getName(), testEntry1);
             // Assert
             assertAll(
-                    () -> verify(testAddressBook, times(1)).editContact(testEntry1, "firstname", "Johnathan")
+                    () -> assertEquals("Johnathan", testEntry1.getFirstName()),
+                    () -> verify(testEntry1, times(1)).setFirstName(anyString())
             );
         }
 
@@ -185,13 +189,13 @@ public class AddressBookInterfaceTest {
             //Arrange
             Contact testEntry1 = spy(new Contact("Molly", "Ellis", "sa@me.com", "01121121123"));
             testInterface.setTheScanner(scanner);
-            when(scanner.nextLine()).thenReturn("invalid", "2", "Mills", "0");
+            when(scanner.nextLine()).thenReturn("invalid", "1", "Mills", "0");
             //Act
             testInterface.editContactChoice(testEntry1.getName(), testEntry1);
             //Assert
             assertAll(
-                    () -> assertEquals("Mills", testEntry1.getSurname()),
-                    () -> verify(testEntry1, times(1)).setSurname(anyString())
+                    () -> assertEquals("Mills", testEntry1.getFirstName()),
+                    () -> verify(testEntry1, times(1)).setFirstName(anyString())
             );
         }
 

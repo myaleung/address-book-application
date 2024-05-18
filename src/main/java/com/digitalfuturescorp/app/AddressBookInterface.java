@@ -154,7 +154,7 @@ public class AddressBookInterface {
                 case "1":
                     //edit first name
                     System.out.println("Enter new first name:");
-                    addressBook.editContact(contact, "firstname", theScanner.nextLine());
+                    contact.setFirstName(theScanner.nextLine());
                     System.out.println("Contact Updated");
                     routeTheUser();
                     break;

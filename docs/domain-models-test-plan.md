@@ -10,7 +10,6 @@ classDiagram
     class AddressBook {
         -contacts ArrayList<Contact>
         +addContact(Contact) void
-        +editContact(Contact) boolean
         +deleteContact(Contact) void
         +searchContact(String) Contact
         +viewContacts() ArrayList
