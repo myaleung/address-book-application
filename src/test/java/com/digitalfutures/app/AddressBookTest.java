@@ -237,5 +237,14 @@ public class AddressBookTest {
                     () -> assertThrows(IllegalArgumentException.class, ()->testAddressBook.deleteContact(testEntry2))
             );
         }
+
+        @Test
+        @DisplayName("Should throw exception when trying to delete an empty contact list")
+        public void testShouldThrowExceptionWhenDeletingEmptyContactList() {
+            //Arrange
+            //Act
+            //Assert
+            assertThrows(IllegalStateException.class, ()->testAddressBook.deleteAllContacts());
+        }
     }
 }

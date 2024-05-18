@@ -42,4 +42,9 @@ public class AddressBook {
         if (!contacts.contains(contactToDelete)) throw new IllegalArgumentException("Contact to delete does not exist");
         contacts.remove(contactToDelete);
     }
+
+    public boolean deleteAllContacts() {
+        if (contacts.isEmpty()) throw new IllegalStateException("Address book is empty");
+        return contacts.isEmpty();
+    }
 }
