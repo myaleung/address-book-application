@@ -55,3 +55,8 @@ Sure, here are some user stories based on the provided requirements:
 5. If the user cancels the deletion, no contacts are deleted and the user is returned to the previous state.
 
 These user stories provide a clear and concise way to understand the requirements and the expected functionality from a user's perspective.
+
+
+---
+I asked co-pilot to how I would edit my contact search method to include searching email and phone number parameters and used this answer to edit my existing method.
+![img.png](img.png)

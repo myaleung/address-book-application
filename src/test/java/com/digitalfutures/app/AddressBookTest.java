@@ -187,6 +187,30 @@ public class AddressBookTest {
                     () -> assertEquals(0, testAddressBook.searchContacts(searchName).size())
             );
         }
+
+        @Test
+        @DisplayName("Should return contact if email match found")
+        public void testShouldReturnContactIfEmailFoundInArrayList() {
+            //Arrange
+            String searchEmail = "m@e.com";
+            testAddressBook.addContact(testEntry);
+            //Act
+            testAddressBook.searchContacts(searchEmail);
+            //Assert
+            assertTrue(testAddressBook.searchContacts(searchEmail).contains(testEntry));
+        }
+
+        @Test
+        @DisplayName("Should return contact if phone number match found")
+        public void testShouldReturnContactIfPhoneNumberFoundInArrayList() {
+            //Arrange
+            String searchPhoneNo = "01121121123";
+            testAddressBook.addContact(testEntry);
+            //Act
+            testAddressBook.searchContacts(searchPhoneNo);
+            //Assert
+            assertTrue(testAddressBook.searchContacts(searchPhoneNo).contains(testEntry));
+        }
     }
 
     @Nested

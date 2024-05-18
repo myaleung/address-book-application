@@ -30,7 +30,9 @@ public class AddressBook {
         if (Validation.isNull(searchTerm) || Validation.isEmpty(searchTerm)) throw new IllegalArgumentException("Search term cannot be null or empty");
         ArrayList<Contact> results = new ArrayList<>();
         for(Contact contact : contacts) {
-            if (contact.getName().toLowerCase().contains(searchTerm.toLowerCase())) {
+            if (contact.getName().toLowerCase().contains(searchTerm.toLowerCase()) ||
+                contact.getEmail().toLowerCase().contains(searchTerm.toLowerCase()) ||
+                contact.getPhoneNumber().contains(searchTerm)) {
                 results.add(contact);
             }
         }
