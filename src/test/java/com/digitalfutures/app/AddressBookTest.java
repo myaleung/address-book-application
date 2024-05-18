@@ -246,5 +246,18 @@ public class AddressBookTest {
             //Assert
             assertThrows(IllegalStateException.class, ()->testAddressBook.deleteAllContacts());
         }
+
+        @Test
+        @DisplayName("Should remove all contacts from contacts list")
+        public void testShouldRemoveAllContactsFromContactList() {
+            //Arrange
+            testAddressBook.addContact(testEntry1);
+            testAddressBook.addContact(testEntry2);
+            //Act
+            int contactListSize = testAddressBook.viewContacts().size();
+            boolean result = testAddressBook.deleteAllContacts();
+            //Assert
+            assertTrue(result);
+        }
     }
 }

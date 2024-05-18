@@ -136,10 +136,7 @@ so that I see contacts that match my search" width="450" height="100%"/>
 
 ### Tests
 - [ ] deleteAllContacts should remove all contacts from the address book
-- [ ] should prompt user to confirm deletion
 - [ ] should return true if contacts are deleted
-- [ ] should return false if contacts are not deleted
-- [ ] should return to previous state if deletion is cancelled
 - [ ] should throw an error if no contacts are found
 
 ## Kanban Board
