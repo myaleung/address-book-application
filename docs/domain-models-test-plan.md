@@ -47,9 +47,10 @@ classDiagram
         -goToEditContacts() void
         +editContactChoice() void
         -editContact() void
-        -gotToDeleteContact() void
+        -goToDeleteContact() void
         -goToSearchContact() void
         -goToViewContacts() void
+        -goToDeleteAllContacts() boolean
         -routeTheUser() void
         -exitProgram() void
     }
@@ -108,6 +109,38 @@ classDiagram
 - [ ] scanned input should be able to delete a contact.
 - [ ] inputs should not be null.
 - [ ] inputs should not be empty.
+---
+<img src="images/img_8.png" alt="As a user,I want to be able to search a contact by phone number, so that I see contacts that match my search" width="450" height="100%"/>
+
+### Tests
+- [ ] phone number should be able to be entered as a search term
+- [ ] should return contact information if phone number matches
+- [ ] should throw an error if no contact matches the entered phone number
+---
+<img src="images/img_9.png" alt="As a user, I want to be able to search a contact by email address, so that I see contacts that match my search" width="450" height="100%"/>
+
+### Tests
+- [ ] email address should be able to be entered as a search term
+- [ ] should return contact information if email address matches
+- [ ] should throw an error if no contact matches the entered email address
+---
+<img src="img_10.png" alt="As a user, I want to be able to partially search a contact by name, phone number or email address,
+so that I see contacts that match my search" width="450" height="100%"/>
+
+### Tests
+- [ ] search should return results that partially match any values by name
+- [ ] search should return results that partially match any values by phone number
+- [ ] search should return results that partially match any values by email address
+---
+<img src="images/img_11.png" alt="As a user, I want to be able to delete all my contacts, so that I can clean and clear my address book" width="450" height="100%"/>
+
+### Tests
+- [ ] deleteAllContacts should remove all contacts from the address book
+- [ ] should prompt user to confirm deletion
+- [ ] should return true if contacts are deleted
+- [ ] should return false if contacts are not deleted
+- [ ] should return to previous state if deletion is cancelled
+- [ ] should throw an error if no contacts are found
 
 ## Kanban Board
 I used a kanban board on Miro to help organise my user stories and production tickets. Here I also included my domain models\
