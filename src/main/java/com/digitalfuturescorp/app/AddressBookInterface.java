@@ -142,13 +142,13 @@ public class AddressBookInterface {
         }
     }
 
-    private void editContactChoice(String contactName, Contact contact) {
+    public void editContactChoice(String contactName, Contact contact) {
         System.out.printf("Editing contact: %s. What field would you like to edit? %n 1. First Name %n 2. Surname %n 3. Email Address %n 4. Phone Number %n", contactName);
         String editOption = theScanner.nextLine();
         editContact(editOption, contact);
     }
 
-    public void editContact(String option, Contact contact) {
+    private void editContact(String option, Contact contact) {
         try {
             switch (option) {
                 case "1":
