@@ -26,12 +26,33 @@ classDiagram
         +getSurname() String
         +getEmail() String
         +getphoneNumber() String
-        +setName(String) void
+        +setFirstName(String) void
+        +setSurname(String) void
         +setEmail(String) void
         +setPhoneNumber(String) void
         -validateName(name String)$ name
         -validateEmail(email String)$ email
         -validatePhoneNumber(phoneNumber String)$ phoneNumber
+    }
+        
+    class AddressBookInterface {
+        -addressBook AddressBook 
+        -theScanner Scanner
+        +setTheScanner(Scanner) void
+        +start(Scanner) void
+        +mainMenu() void
+        -selectedOption() void
+        -goToViewContacts() void
+        -goToAddNewContact() void
+        -addNewContact() void
+        -goToEditContacts() void
+        +editContactChoice() void
+        -editContact() void
+        -gotToDeleteContact() void
+        -goToSearchContact() void
+        -goToViewContacts() void
+        -routeTheUser() void
+        -exitProgram() void
     }
 ```
 ## User Stories

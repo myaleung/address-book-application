@@ -39,7 +39,7 @@ public class AddressBookInterface {
         }
     }
 
-    public void selectedOption(String option) {
+    private void selectedOption(String option) {
         try {
             switch(option) {
                 case "1":
@@ -154,7 +154,7 @@ public class AddressBookInterface {
                 case "1":
                     //edit first name
                     System.out.println("Enter new first name:");
-                    contact.setFirstName(theScanner.nextLine());
+                    addressBook.editContact(contact, "firstname", theScanner.nextLine());
                     System.out.println("Contact Updated");
                     routeTheUser();
                     break;
