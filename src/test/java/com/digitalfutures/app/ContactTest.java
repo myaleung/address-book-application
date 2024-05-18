@@ -257,5 +257,17 @@ public class ContactTest {
                     () -> assertNotEquals(oldPhoneNumber, actualName)
             );
         }
+
+        @Test
+        @DisplayName("Should return correct string representation of contact")
+        public void toStringReturnsCorrectFormat() {
+            String expectedOutput = "Contact{" +
+                    "FirstName='" + validFName + '\'' +
+                    ", Surname=" + validLName +
+                    ", Email=" + validEmail +
+                    ", phoneNumber='" + validPhoneNumber + '\'' +
+                    "} ";
+            assertEquals(expectedOutput, testContact.toString());
+        }
     }
 }

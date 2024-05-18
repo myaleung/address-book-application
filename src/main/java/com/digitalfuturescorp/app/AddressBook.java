@@ -20,6 +20,27 @@ public class AddressBook {
         contacts.add(contactEntry);
     }
 
+    public void editContact(Contact contactToEdit, String fieldToEdit, String newValue) {
+        if (Validation.isNull(contactToEdit)) throw new IllegalArgumentException("Contact to edit cannot be null");
+        if (Validation.isNull(fieldToEdit)) throw new IllegalArgumentException("Field to edit cannot be null");
+        if (Validation.isEmpty(newValue)) throw new IllegalArgumentException("New value cannot be empty");
+        if (!contacts.contains(contactToEdit)) throw new IllegalArgumentException("Contact to edit does not exist");
+        switch (fieldToEdit.toLowerCase()) {
+            case "firstname":
+                contactToEdit.setFirstName(newValue);
+                break;
+            case "lastname":
+                contactToEdit.setSurname(newValue);
+                break;
+            case "email":
+                contactToEdit.setEmail(newValue);
+                break;
+            case "phone":
+                contactToEdit.setPhoneNumber(newValue);
+                break;
+        }
+    }
+
     public ArrayList<Contact> viewContacts() {
         if (contacts.isEmpty()) throw new IllegalStateException("Address book is empty");
         Collections.sort(contacts);

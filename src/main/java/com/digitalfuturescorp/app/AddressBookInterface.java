@@ -39,7 +39,7 @@ public class AddressBookInterface {
         }
     }
 
-    public void selectedOption(String option) {
+    private void selectedOption(String option) {
         try {
             switch(option) {
                 case "1":
@@ -77,7 +77,7 @@ public class AddressBookInterface {
         }
     }
 
-    public void goToViewContacts() {
+    private void goToViewContacts() {
         try {
             System.out.println("Here are all the contacts in your address book:");
             ArrayList<Contact> myAddressBook = addressBook.viewContacts();
@@ -142,19 +142,19 @@ public class AddressBookInterface {
         }
     }
 
-    private void editContactChoice(String contactName, Contact contact) {
+    public void editContactChoice(String contactName, Contact contact) {
         System.out.printf("Editing contact: %s. What field would you like to edit? %n 1. First Name %n 2. Surname %n 3. Email Address %n 4. Phone Number %n", contactName);
         String editOption = theScanner.nextLine();
         editContact(editOption, contact);
     }
 
-    public void editContact(String option, Contact contact) {
+    private void editContact(String option, Contact contact) {
         try {
             switch (option) {
                 case "1":
                     //edit first name
                     System.out.println("Enter new first name:");
-                    contact.setFirstName(theScanner.nextLine());
+                    addressBook.editContact(contact, "firstname", theScanner.nextLine());
                     System.out.println("Contact Updated");
                     routeTheUser();
                     break;
@@ -249,7 +249,7 @@ public class AddressBookInterface {
         }
     }
 
-    public void exitProgram() {
+    private void exitProgram() {
         theScanner.close();
         System.out.println("Thank you for using DF Corp Address Book. Goodbye.");
     }

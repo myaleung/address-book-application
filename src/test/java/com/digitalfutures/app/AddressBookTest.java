@@ -68,6 +68,98 @@ public class AddressBookTest {
         }
 
         @Test
+        @DisplayName("Should edit first name of contact in contacts list")
+        public void testShouldEditContactFirstNameInArrayList() {
+            //Arrange
+            Contact testEntry1 = spy(new Contact("Molly", "Ellis", "m@e.com", "01121121222"));
+            String editField = "firstname";
+            testAddressBook.addContact(testEntry1);
+            //Act
+            testAddressBook.editContact(testEntry1, editField, "Rosie");
+            //Assert
+            assertEquals("Rosie Ellis", testEntry1.getName());
+        }
+
+        @Test
+        @DisplayName("Should edit surname of contact in contacts list")
+        public void testShouldEditContactSurnameInArrayList() {
+            //Arrange
+            Contact testEntry1 = spy(new Contact("Molly", "Ellis", "m@e.com", "01121121222"));
+            String editField = "lastname";
+            testAddressBook.addContact(testEntry1);
+            //Act
+            testAddressBook.editContact(testEntry1, editField, "Elvis");
+            //Assert
+            assertEquals("Molly Elvis", testEntry1.getName());
+        }
+
+        @Test
+        @DisplayName("Should edit email of contact in contacts list")
+        public void testShouldEditContactEmailInArrayList() {
+            //Arrange
+            Contact testEntry1 = spy(new Contact("Molly", "Ellis", "m@e.com", "01121121222"));
+            String editField = "email";
+            testAddressBook.addContact(testEntry1);
+            //Act
+            testAddressBook.editContact(testEntry1, editField, "g@g.gg");
+            //Assert
+            assertEquals("g@g.gg", testEntry1.getEmail());
+        }
+
+        @Test
+        @DisplayName("Should edit phone number of contact in contacts list")
+        public void testShouldEditContactPhoneNumberInArrayList() {
+            //Arrange
+            Contact testEntry1 = spy(new Contact("Molly", "Ellis", "m@e.com", "01121121222"));
+            String editField = "phone";
+            testAddressBook.addContact(testEntry1);
+            //Act
+            testAddressBook.editContact(testEntry1, editField, "01121555222");
+            //Assert
+            assertEquals("01121555222", testEntry1.getPhoneNumber());
+        }
+
+        @Test
+        @DisplayName("Should throw exception if contact is null")
+        public void testShouldThrowExceptionIfContactIsNull() {
+            //Arrange
+            String editField = "phone";
+            //Assert
+            assertThrows(IllegalArgumentException.class, ()->testAddressBook.editContact(null, editField, "01121555222"));
+        }
+
+        @Test
+        @DisplayName("Should throw exception if field to edit is null")
+        public void testShouldThrowExceptionIfFieldToEditIsNull() {
+            //Arrange
+            Contact testEntry1 = spy(new Contact("Molly", "Ellis", "m@e.com", "01121121222"));
+            testAddressBook.addContact(testEntry1);
+            //Assert
+            assertThrows(IllegalArgumentException.class, ()->testAddressBook.editContact(testEntry1, null, "01121555222"));
+        }
+
+        @Test
+        @DisplayName("Should throw exception if new value is empty")
+        public void testShouldThrowExceptionIfNewValueIsEmpty() {
+            //Arrange
+            Contact testEntry1 = spy(new Contact("Molly", "Ellis", "m@e.com", "01121121222"));
+            String editField = "phone";
+            testAddressBook.addContact(testEntry1);
+            //Assert
+            assertThrows(IllegalArgumentException.class, ()->testAddressBook.editContact(testEntry1, editField, ""));
+        }
+
+        @Test
+        @DisplayName("Should throw exception if contact not in contacts list")
+        public void testShouldThrowExceptionIfContactNotInContactList() {
+            //Arrange
+            Contact testEntry1 = spy(new Contact("Molly", "Ellis", "m@e.com", "01121121222"));
+            String editField = "phone";
+            //Assert
+            assertThrows(IllegalArgumentException.class, ()->testAddressBook.editContact(testEntry1, editField, ""));
+        }
+
+        @Test
         @DisplayName("Should show all contacts in the address book")
         public void testShouldShowAllContactsInArrayList() {
             //Arrange
