@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.spy;
 
 public class AddressBookInterfaceTest {
     @Nested
@@ -33,29 +33,54 @@ public class AddressBookInterfaceTest {
             testAddressBook = null;
             testContact = null;
             testInterface = null;
+            scanner = null;
+        }
+
+        @Test
+        @DisplayName("Should add contact to address book")
+        public void testSelectedOptionAddNewContact() {
+            //Arrange
+            String fName = "John";
+            String lName = "Doe";
+            String email = "john.doe@example.com";
+            String phoneNumber = "01234567890";
+
+            //Act
+            testInterface.addNewContact(fName, lName, email, phoneNumber);
+
+            //Assert
+            assertAll(
+                () -> verify(testAddressBook, times(1)).addContact(any(Contact.class))
+            );
         }
 
 //        @Test
-//        @DisplayName("Should add contact to address book")
-//        public void testAddContactToAddressBook() {
-////            testInterface.addNewContact(scanner);
-////            when(testAddressBook.addContact()).thenReturn()
+//        public void selectedOptionShouldDeleteContact() {
+//            // Mock the Scanner inputs for deleting a contact
+//            when(scanner.nextLine()).thenReturn("3", "John", "0");
+//
+//            // Start the interface
 //            testInterface.start(scanner);
-//            when(scanner.nextLine()).thenReturn("1","Amy", "Lee", "aa@aa.com", "01111111111", "0");
-////            when(testAddressBook.viewContacts().size()).thenReturn(1);
-//            testAddressBook.addContact(testContact);
-//            assertAll(
-//                    () -> assertEquals(1, testAddressBook.viewContacts().size())
-//            );
+//
+//            // Verify that searchContacts and deleteContact were called
+//            verify(testAddressBook, times(1)).searchContacts(anyString());
+//            verify(testAddressBook, times(1)).deleteContact(any(Contact.class));
 //        }
 
 //        @Test
-//        @DisplayName("Should register input and show contacts")
-//        public void testRegisterInputAndShowContacts() {
-//            when(scanner.nextLine()).thenReturn("4", "0");
+//        @DisplayName("Should register input and edit a contact")
+//        public void testRegisterInputAndEditContact() {
+//            //Arrange
+//            Contact testEntry1 = spy(new Contact("Molly", "Ellis", "sa@me.com", "01121121123"));
+//            Contact testEntry2 = spy(new Contact("Millie", "Brown", "sa@me.com", "01121121222"));
+//            testAddressBook.addContact(testEntry1);
+//            testAddressBook.addContact(testEntry2);
+//            when(scanner.nextLine()).thenReturn("2", "Molly", "1", "Changed", "0");
+//            //Act
 //            testInterface.start(scanner);
+//            //Assert
 //            assertAll(
-//                    () -> assertTrue(testAddressBook.viewContacts().isEmpty())
+//                    () -> assertTrue(testAddressBook.viewContacts().get(0).getName().contains("Changed"))
 //            );
 //        }
     }

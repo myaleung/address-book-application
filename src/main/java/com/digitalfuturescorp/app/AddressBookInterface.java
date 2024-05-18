@@ -109,7 +109,7 @@ public class AddressBookInterface {
         }
     }
 
-    private void addNewContact(String fName, String lName, String email, String phoneNumber) {
+    public void addNewContact(String fName, String lName, String email, String phoneNumber) {
         try {
             Contact newContact = new Contact(fName, lName, email, phoneNumber);
             addressBook.addContact(newContact);
