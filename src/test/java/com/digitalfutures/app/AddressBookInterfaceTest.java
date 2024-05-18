@@ -5,8 +5,6 @@ import com.digitalfuturescorp.app.AddressBookInterface;
 import com.digitalfuturescorp.app.Contact;
 import org.junit.jupiter.api.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -54,6 +52,52 @@ public class AddressBookInterfaceTest {
 
             //Assert
             verify(testAddressBook, times(1)).addContact(any(Contact.class));
+        }
+
+        @Test
+        @DisplayName("Should handle invalid contact details")
+        public void goToAddNewContactShouldHandleInvalidDetails() {
+            //Arrange
+            when(scanner.nextLine()).thenReturn("1", "",  "", "", "", "Tess", "Tester", "test@test.com", "01234123123", "0");
+
+            //Act
+            testInterface.start(scanner);
+
+            //Assert
+            verify(testAddressBook, times(1)).addContact(any(Contact.class));
+        }
+
+        @Test
+        @DisplayName("Should go to goToEditContacts method")
+        public void selectedOptionShouldGoToEditContacts() {
+            //Arrange
+            when(scanner.nextLine()).thenReturn("2", "John", "0");
+
+            //Act
+            testInterface.start(scanner);
+
+            //Assert
+            verify(testAddressBook, times(1)).searchContacts(anyString());
+        }
+
+        @Test
+        @DisplayName("Should go to editContactChoice method")
+        public void selectedOptionShouldGoToEditContactChoice() {
+            //Arrange
+            ArrayList<Contact> mockArrayList = mock(ArrayList.class);
+            when(scanner.nextLine()).thenReturn("2", "John", "2", "0");
+            when(mockArrayList.get(0)).thenReturn(testContact);
+            when(mockArrayList.get(0).getName()).thenReturn("John Doe");
+
+            //Act
+            testInterface.start(scanner);
+
+            //Assert
+            assertAll(
+                    () -> verify(testAddressBook, times(1)).searchContacts(anyString()),
+                    () -> assertEquals("John Doe", testContact.getName()),
+                    () -> verify(testContact, times(1)).getName()
+            );
         }
 
         @Test
@@ -129,18 +173,30 @@ public class AddressBookInterfaceTest {
         }
 
         @Test
+        @DisplayName("Should handle non-existent contact for editing")
+        public void goToEditContactsShouldHandleNonExistentContact() {
+            when(scanner.nextLine()).thenReturn("2", "NonExistent", "0");
+
+            testInterface.start(scanner);
+
+            verify(testAddressBook, times(1)).searchContacts(anyString());
+        }
+
+        @Test
         @DisplayName("Should call search contact once to check for delete")
         public void selectedOptionShouldGoToDeleteContact() {
             //Arrange
+            ArrayList<Contact> mockArrayList = mock(ArrayList.class);
             when(scanner.nextLine()).thenReturn("3", "Molly", "0");
+            when(mockArrayList.get(0)).thenReturn(testContact);
+            when(testAddressBook.searchContacts(anyString())).thenReturn(mockArrayList);
 
             //Act
             testInterface.start(scanner);
 
             //Assert
             verify(testAddressBook, times(1)).searchContacts(anyString());
-            /*Unable to locate a contact to delete*/
-//            verify(testAddressBook, times(1)).deleteContact(any(Contact.class));
+            verify(testAddressBook, times(1)).deleteContact(any(Contact.class));
         }
 
         @Test
@@ -171,6 +227,19 @@ public class AddressBookInterfaceTest {
                     () -> verify(testAddressBook, times(1)).searchContacts(anyString()),
                     () -> assertEquals(0, testAddressBook.searchContacts(anyString()).size())
             );
+        }
+
+        @Test
+        @DisplayName("Should handle non-existent contact for search")
+        public void gotToSearchContactShouldHandleNonExistentContact() {
+            //Arrange
+            when(scanner.nextLine()).thenReturn("5", "NonExistent", "0");
+
+            //Act
+            testInterface.start(scanner);
+
+            //Assert
+            verify(testAddressBook, times(1)).searchContacts(anyString());
         }
 
         @Test

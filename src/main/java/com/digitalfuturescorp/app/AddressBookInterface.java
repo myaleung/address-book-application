@@ -77,7 +77,7 @@ public class AddressBookInterface {
         }
     }
 
-    public void goToViewContacts() {
+    private void goToViewContacts() {
         try {
             System.out.println("Here are all the contacts in your address book:");
             ArrayList<Contact> myAddressBook = addressBook.viewContacts();
@@ -249,7 +249,7 @@ public class AddressBookInterface {
         }
     }
 
-    public void exitProgram() {
+    private void exitProgram() {
         theScanner.close();
         System.out.println("Thank you for using DF Corp Address Book. Goodbye.");
     }
