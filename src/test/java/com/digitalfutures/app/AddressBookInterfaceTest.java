@@ -5,6 +5,8 @@ import com.digitalfuturescorp.app.AddressBookInterface;
 import com.digitalfuturescorp.app.Contact;
 import org.junit.jupiter.api.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -20,13 +22,18 @@ public class AddressBookInterfaceTest {
         private AddressBook testAddressBook;
         private Contact testContact;
         private Scanner scanner;
+        private String fName = "John";
+        private String lName = "Doe";
+        private String email = "john.doe@example.com";
+        private String phoneNumber = "01234567890";
 
         @BeforeEach
         void setUp() {
             testAddressBook = mock(AddressBook.class);
             testContact = mock(Contact.class);
             testInterface = new AddressBookInterface(testAddressBook);
-            scanner = mock(Scanner.class);        }
+            scanner = mock(Scanner.class);
+        }
 
         @AfterEach
         void tearDown() {
@@ -40,48 +47,156 @@ public class AddressBookInterfaceTest {
         @DisplayName("Should add contact to address book")
         public void testSelectedOptionAddNewContact() {
             //Arrange
-            String fName = "John";
-            String lName = "Doe";
-            String email = "john.doe@example.com";
-            String phoneNumber = "01234567890";
+            when(scanner.nextLine()).thenReturn("1", "John", "Doe", "john.doe@example.com", "01234567890", "0");
 
             //Act
-            testInterface.addNewContact(fName, lName, email, phoneNumber);
+            testInterface.start(scanner);
 
             //Assert
+            verify(testAddressBook, times(1)).addContact(any(Contact.class));
+        }
+
+        @Test
+        @DisplayName("Should call edit contact first name once")
+        public void testSelectedOptionShouldGoToEditContactFirstName() {
+            // Arrange
+            Contact testEntry1 = spy(new Contact("Molly", "Ellis", "sa@me.com", "01121121123"));
+            testInterface.setTheScanner(scanner);
+            when(scanner.nextLine()).thenReturn("Johnathan", "0");
+
+            // Act
+            testInterface.editContact("1", testEntry1);
+
+            // Assert
             assertAll(
-                () -> verify(testAddressBook, times(1)).addContact(any(Contact.class))
+                    () -> assertEquals("Johnathan", testEntry1.getFirstName()),
+                    () -> verify(testEntry1, times(1)).setFirstName(anyString())
             );
         }
 
-//        @Test
-//        public void selectedOptionShouldDeleteContact() {
-//            // Mock the Scanner inputs for deleting a contact
-//            when(scanner.nextLine()).thenReturn("3", "John", "0");
-//
-//            // Start the interface
-//            testInterface.start(scanner);
-//
-//            // Verify that searchContacts and deleteContact were called
-//            verify(testAddressBook, times(1)).searchContacts(anyString());
-//            verify(testAddressBook, times(1)).deleteContact(any(Contact.class));
-//        }
+        @Test
+        @DisplayName("Should call edit contact last name once")
+        public void testSelectedOptionShouldGoToEditContactLastName() {
+            // Arrange
+            Contact testEntry1 = spy(new Contact("Molly", "Ellis", "sa@me.com", "01121121123"));
+            testInterface.setTheScanner(scanner);
+            when(scanner.nextLine()).thenReturn("Evans", "0");
 
-//        @Test
-//        @DisplayName("Should register input and edit a contact")
-//        public void testRegisterInputAndEditContact() {
-//            //Arrange
-//            Contact testEntry1 = spy(new Contact("Molly", "Ellis", "sa@me.com", "01121121123"));
-//            Contact testEntry2 = spy(new Contact("Millie", "Brown", "sa@me.com", "01121121222"));
-//            testAddressBook.addContact(testEntry1);
-//            testAddressBook.addContact(testEntry2);
-//            when(scanner.nextLine()).thenReturn("2", "Molly", "1", "Changed", "0");
-//            //Act
-//            testInterface.start(scanner);
-//            //Assert
-//            assertAll(
-//                    () -> assertTrue(testAddressBook.viewContacts().get(0).getName().contains("Changed"))
-//            );
-//        }
+            // Act
+            testInterface.editContact("2", testEntry1);
+
+            // Assert
+            assertAll(
+                    () -> assertEquals("Evans", testEntry1.getSurname()),
+                    () -> verify(testEntry1, times(1)).setSurname(anyString())
+            );
+        }
+
+        @Test
+        @DisplayName("Should call edit contact email once")
+        public void testSelectedOptionShouldGoToEditContactEmail() {
+            // Arrange
+            Contact testEntry1 = spy(new Contact("Molly", "Ellis", "sa@me.com", "01121121123"));
+            testInterface.setTheScanner(scanner);
+            when(scanner.nextLine()).thenReturn("changed@gg.com", "0");
+
+            // Act
+            testInterface.editContact("3", testEntry1);
+
+            // Assert
+            assertAll(
+                    () -> assertEquals("changed@gg.com", testEntry1.getEmail()),
+                    () -> verify(testEntry1, times(1)).setEmail(anyString())
+            );
+        }
+
+        @Test
+        @DisplayName("Should call edit contact phone number once")
+        public void testSelectedOptionShouldGoToEditContactPhoneNumber() {
+            // Arrange
+            Contact testEntry1 = spy(new Contact("Molly", "Ellis", "sa@me.com", "01121121123"));
+            testInterface.setTheScanner(scanner);
+            when(scanner.nextLine()).thenReturn("01121121126", "0");
+
+            // Act
+            testInterface.editContact("4", testEntry1);
+
+            // Assert
+            assertAll(
+                    () -> assertEquals("01121121126", testEntry1.getPhoneNumber()),
+                    () -> verify(testEntry1, times(1)).setPhoneNumber(anyString())
+            );
+        }
+
+        @Test
+        @DisplayName("Should call search contact once to check for delete")
+        public void selectedOptionShouldGoToDeleteContact() {
+            //Arrange
+            when(scanner.nextLine()).thenReturn("3", "Molly", "0");
+
+            //Act
+            testInterface.start(scanner);
+
+            //Assert
+            verify(testAddressBook, times(1)).searchContacts(anyString());
+            /*Unable to locate a contact to delete*/
+//            verify(testAddressBook, times(1)).deleteContact(any(Contact.class));
+        }
+
+        @Test
+        @DisplayName("Should call search for a contact method when viewing")
+        public void selectedOptionShouldViewContacts() {
+            //Arrange
+            when(scanner.nextLine()).thenReturn("4", "0");
+            //Act
+            testInterface.start(scanner);
+
+            //Assert
+            assertAll(
+                    () -> verify(testAddressBook, times(1)).viewContacts(),
+                    () -> assertEquals(0, testAddressBook.searchContacts(anyString()).size())
+            );
+        }
+
+        @Test
+        @DisplayName("Should call search for a contact method")
+        public void selectedOptionShouldSearchContacts() {
+            //Arrange
+            when(scanner.nextLine()).thenReturn("5", "John", "0");
+            //Act
+            testInterface.start(scanner);
+
+            //Assert
+            assertAll(
+                    () -> verify(testAddressBook, times(1)).searchContacts(anyString()),
+                    () -> assertEquals(0, testAddressBook.searchContacts(anyString()).size())
+            );
+        }
+
+        @Test
+        @DisplayName("Should register input and exit program")
+        public void selectedOptionShouldExitProgram() {
+            //Arrange
+            when(scanner.nextLine()).thenReturn("0");
+
+            //Act
+            testInterface.start(scanner);
+
+            //Assert
+            verify(scanner, times(1)).close();
+        }
+
+        @Test
+        @DisplayName("Should return to main menu for invalid option")
+        public void selectedOptionShouldReturnToMainMenuForInvalidOption() {
+            //Arrange
+            when(scanner.nextLine()).thenReturn("invalid", "0");
+
+            //Act
+            testInterface.start(scanner);
+
+            //Assert
+            verify(scanner, times(2)).nextLine();
+        }
     }
 }

@@ -11,6 +11,10 @@ public class AddressBookInterface {
         this.addressBook = addressBook;
     }
 
+    public void setTheScanner(Scanner testScanner) {
+        this.theScanner = testScanner;
+    }
+
     public void start(Scanner aScanner) {
         this.theScanner = aScanner;
         mainMenu();
@@ -73,10 +77,9 @@ public class AddressBookInterface {
         }
     }
 
-    private void goToViewContacts() {
+    public void goToViewContacts() {
         try {
             System.out.println("Here are all the contacts in your address book:");
-            System.out.println(addressBook.viewContacts());
             ArrayList<Contact> myAddressBook = addressBook.viewContacts();
             for(Contact contact : myAddressBook) {
                 System.out.println(contact);
@@ -109,7 +112,7 @@ public class AddressBookInterface {
         }
     }
 
-    public void addNewContact(String fName, String lName, String email, String phoneNumber) {
+    private void addNewContact(String fName, String lName, String email, String phoneNumber) {
         try {
             Contact newContact = new Contact(fName, lName, email, phoneNumber);
             addressBook.addContact(newContact);
@@ -145,7 +148,7 @@ public class AddressBookInterface {
         editContact(editOption, contact);
     }
 
-    private void editContact(String option, Contact contact) {
+    public void editContact(String option, Contact contact) {
         try {
             switch (option) {
                 case "1":
@@ -246,9 +249,8 @@ public class AddressBookInterface {
         }
     }
 
-    private void exitProgram() {
+    public void exitProgram() {
         theScanner.close();
         System.out.println("Thank you for using DF Corp Address Book. Goodbye.");
-        System.exit(0);
     }
 }
