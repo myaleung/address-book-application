@@ -201,6 +201,18 @@ public class AddressBookTest {
         }
 
         @Test
+        @DisplayName("Should return contact if partial email match found")
+        public void testShouldReturnContactIfPartialEmailFoundInArrayList() {
+            //Arrange
+            String searchEmail = "@e.com";
+            testAddressBook.addContact(testEntry);
+            //Act
+            testAddressBook.searchContacts(searchEmail);
+            //Assert
+            assertTrue(testAddressBook.searchContacts(searchEmail).contains(testEntry));
+        }
+
+        @Test
         @DisplayName("Should return empty list if email match not found")
         public void testShouldReturnEmptyListIfEmailNotFoundInArrayList() {
             //Arrange
@@ -220,6 +232,18 @@ public class AddressBookTest {
         public void testShouldReturnContactIfPhoneNumberFoundInArrayList() {
             //Arrange
             String searchPhoneNo = "01121121123";
+            testAddressBook.addContact(testEntry);
+            //Act
+            testAddressBook.searchContacts(searchPhoneNo);
+            //Assert
+            assertTrue(testAddressBook.searchContacts(searchPhoneNo).contains(testEntry));
+        }
+
+        @Test
+        @DisplayName("Should return contact if partial phone number match found")
+        public void testShouldReturnContactIfPartialPhoneNumberFoundInArrayList() {
+            //Arrange
+            String searchPhoneNo = "121123";
             testAddressBook.addContact(testEntry);
             //Act
             testAddressBook.searchContacts(searchPhoneNo);

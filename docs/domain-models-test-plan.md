@@ -124,8 +124,7 @@ classDiagram
 - [ ] should return contact information if email address matches
 - [ ] should throw an error if no contact matches the entered email address
 ---
-<img src="img_10.png" alt="As a user, I want to be able to partially search a contact by name, phone number or email address,
-so that I see contacts that match my search" width="450" height="100%"/>
+<img src="images/img_10.png" alt="As a user, I want to be able to partially search a contact by name, phone number or email address, so that I see contacts that match my search" width="450" height="100%"/>
 
 ### Tests
 - [ ] search should return results that partially match any values by name
