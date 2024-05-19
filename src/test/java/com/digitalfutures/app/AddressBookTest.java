@@ -201,6 +201,21 @@ public class AddressBookTest {
         }
 
         @Test
+        @DisplayName("Should return empty list if email match not found")
+        public void testShouldReturnEmptyListIfEmailNotFoundInArrayList() {
+            //Arrange
+            String searchEmail = "e@e.com";
+            testAddressBook.addContact(testEntry);
+            //Act
+            testAddressBook.searchContacts(searchEmail);
+            //Assert
+            assertAll(
+                    () -> assertFalse(testAddressBook.searchContacts(searchEmail).contains(testEntry)),
+                    () -> assertEquals(0, testAddressBook.searchContacts(searchEmail).size())
+            );
+        }
+
+        @Test
         @DisplayName("Should return contact if phone number match found")
         public void testShouldReturnContactIfPhoneNumberFoundInArrayList() {
             //Arrange
@@ -210,6 +225,21 @@ public class AddressBookTest {
             testAddressBook.searchContacts(searchPhoneNo);
             //Assert
             assertTrue(testAddressBook.searchContacts(searchPhoneNo).contains(testEntry));
+        }
+
+        @Test
+        @DisplayName("Should return empty list if phone number match not found")
+        public void testShouldReturnEmptyListIfPhoneNumberNotFoundInArrayList() {
+            //Arrange
+            String searchPhoneNo = "01121121166";
+            testAddressBook.addContact(testEntry);
+            //Act
+            testAddressBook.searchContacts(searchPhoneNo);
+            //Assert
+            assertAll(
+                    () -> assertFalse(testAddressBook.searchContacts(searchPhoneNo).contains(testEntry)),
+                    () -> assertEquals(0, testAddressBook.searchContacts(searchPhoneNo).size())
+            );
         }
 
         @Test
