@@ -228,6 +228,19 @@ public class AddressBookInterfaceTest {
         }
 
         @Test
+        @DisplayName("Should display all contacts when address book is not empty")
+        public void goToViewContactsShouldDisplayWhenNotEmpty() {
+            // Arrange
+            mockArrayList.add(new Contact("John", "Doe", "john.doe@example.com", "01234567890"));
+            when(scanner.nextLine()).thenReturn("4", "0");
+            when(testAddressBook.viewContacts()).thenReturn(mockArrayList);
+            // Act
+            testInterface.start(scanner);
+            // Assert
+            verify(testAddressBook, times(1)).viewContacts();
+        }
+
+        @Test
         @DisplayName("Should call search for a contact method")
         public void selectedOptionShouldSearchContacts() {
             //Arrange
@@ -280,13 +293,26 @@ public class AddressBookInterfaceTest {
         }
 
         @Test
-        @DisplayName("Should call delete all contacts once")
-        public void selectedOptionShouldDeleteAllContacts() {
+        @DisplayName("Should call delete all contacts when address book is not empty")
+        public void gotToDeleteAllContactsShouldDeleteWhenNotEmpty() {
             //Arrange
+            when(testAddressBook.deleteAllContacts()).thenReturn(true);
             when(scanner.nextLine()).thenReturn("6", "0");
             //Act
             testInterface.start(scanner);
             //Assert
+            verify(testAddressBook, times(1)).deleteAllContacts();
+        }
+
+        @Test
+        @DisplayName("Should not delete any contacts when address book is empty")
+        public void gotToDeleteAllContactsShouldNotDeleteWhenEmpty() {
+            // Arrange
+            when(testAddressBook.deleteAllContacts()).thenReturn(false);
+            when(scanner.nextLine()).thenReturn("6", "0");
+            // Act
+            testInterface.start(scanner);
+            // Assert
             verify(testAddressBook, times(1)).deleteAllContacts();
         }
 
@@ -332,6 +358,136 @@ public class AddressBookInterfaceTest {
             testInterface.start(scanner);
             //Assert
             verify(scanner, times(2)).nextLine();
+        }
+
+        @Nested
+        @DisplayName("Address Book Interface Edge Cases")
+        public class AddressBookInterfaceEdgeCases {
+            @Test
+            @DisplayName("Should handle invalid option in selectedOption method")
+            public void selectedOptionShouldHandleInvalidOption() {
+                // Arrange
+                when(scanner.nextLine()).thenReturn("invalid", "0");
+                // Act
+                testInterface.start(scanner);
+                // Assert
+                verify(scanner, times(2)).nextLine();
+            }
+
+            @Test
+            @DisplayName("Should handle exception in goToAddNewContact method")
+            public void goToAddNewContactShouldHandleException() {
+                // Arrange
+                when(scanner.nextLine()).thenReturn("1").thenThrow(new RuntimeException("Mock Exception"));
+                // Act
+                testInterface.start(scanner);
+                // Assert
+                verify(scanner, times(2)).nextLine();
+            }
+
+            @Test
+            @DisplayName("Should handle exception in addNewContact method")
+            public void addNewContactShouldHandleException() {
+                // Arrange
+                when(scanner.nextLine()).thenReturn("1", "John", "Doe", "john.doe@example.com").thenThrow(new RuntimeException("Mock Exception"));
+                // Act
+                testInterface.start(scanner);
+                // Assert
+                verify(scanner, times(5)).nextLine();
+            }
+
+            @Test
+            @DisplayName("Should handle exception in goToEditContacts method")
+            public void goToEditContactsShouldHandleException() {
+                // Arrange
+                when(scanner.nextLine()).thenReturn("2", "John").thenThrow(new RuntimeException("Mock Exception"));
+                // Act
+                testInterface.start(scanner);
+                // Assert
+                verify(scanner, times(3)).nextLine();
+            }
+
+            @Test
+            @DisplayName("Should handle exception in editContact method")
+            public void editContactShouldHandleException() {
+                // Arrange
+                Contact testEntry1 = spy(new Contact("Molly", "Ellis", "sa@me.com", "01121121123"));
+                testInterface.setTheScanner(scanner);
+                when(scanner.nextLine()).thenReturn("1").thenThrow(new RuntimeException("Mock Exception"));
+                // Act
+                testInterface.editContactChoice(testEntry1.getName(), testEntry1);
+                // Assert
+                verify(scanner, times(2)).nextLine();
+            }
+
+            @Test
+            @DisplayName("Should handle exception in selectedOption method")
+            public void selectedOptionShouldHandleException() {
+                // Arrange
+                when(scanner.nextLine()).thenThrow(new RuntimeException("Mock Exception"));
+                // Act
+                testInterface.start(scanner);
+                // Assert
+                verify(scanner, times(1)).nextLine();
+            }
+
+            @Test
+            @DisplayName("Should handle empty address book in goToViewContacts method")
+            public void goToViewContactsShouldHandleEmptyAddressBook() {
+                // Arrange
+                when(scanner.nextLine()).thenReturn("4", "0");
+                when(testAddressBook.viewContacts()).thenThrow(new IllegalStateException());
+                // Act
+                testInterface.start(scanner);
+                // Assert
+                verify(testAddressBook, times(1)).viewContacts();
+            }
+
+            @Test
+            @DisplayName("Should handle exception in gotToSearchContact method")
+            public void gotToSearchContactShouldHandleException() {
+                // Arrange
+                when(scanner.nextLine()).thenReturn("5", "John").thenThrow(new RuntimeException("Mock Exception"));
+                // Act
+                testInterface.start(scanner);
+                // Assert
+                verify(scanner, times(3)).nextLine();
+            }
+
+            @Test
+            @DisplayName("Should handle exception in gotToDeleteContact method")
+            public void gotToDeleteContactShouldHandleException() {
+                // Arrange
+                when(scanner.nextLine()).thenReturn("3", "John").thenThrow(new RuntimeException("Mock Exception"));
+                // Act
+                testInterface.start(scanner);
+                // Assert
+                verify(scanner, times(3)).nextLine();
+            }
+
+            @Test
+            @DisplayName("Should handle exception in gotToDeleteAllContacts method")
+            public void gotToDeleteAllContactsShouldHandleException() {
+                // Arrange
+                when(testAddressBook.deleteAllContacts()).thenThrow(new RuntimeException("Mock Exception"));
+                when(scanner.nextLine()).thenReturn("6", "0");
+                // Act
+                testInterface.start(scanner);
+                // Assert
+                verify(scanner, times(1)).nextLine();
+                verify(testAddressBook, times(1)).deleteAllContacts();
+            }
+
+            @Test
+            @DisplayName("Should handle exception in routeTheUser method")
+            public void routeTheUserShouldHandleException() {
+                // Arrange
+                when(scanner.nextLine()).thenReturn("4", "1").thenThrow(new RuntimeException("Mock Exception"));
+                // Act
+                testInterface.start(scanner);
+                // Assert
+                verify(scanner, times(3)).nextLine();
+            }
         }
     }
 }
