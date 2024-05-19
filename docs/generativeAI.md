@@ -60,7 +60,7 @@ This was the response from ChatGPT:
 
 ---
 During the editing to include the additional requirements, I asked co-pilot how I could edit my contact search method (referencing the current code) to include searching with email and phone number parameters and used this answer to edit my existing method.
-![img.png](img.png)
+![img.png](images/copilotimg.png)
 
 ---
 I also asked ChatGPT if there were any edge cases to consider for these additional requirements and this was the response:

@@ -13,7 +13,7 @@ classDiagram
         +deleteContact(Contact) void
         +searchContact(String) Contact
         +viewContacts() ArrayList
-        +clearContacts() boolean
+        +deleteAllContacts() boolean
     }
     class Contact {
         -fName String
@@ -50,7 +50,8 @@ classDiagram
         -goToDeleteContact() void
         -goToSearchContact() void
         -goToViewContacts() void
-        -goToDeleteAllContacts() boolean
+        -goToDeleteAllContacts() void
+        -deleteAllContacts() void
         -routeTheUser() void
         -exitProgram() void
     }

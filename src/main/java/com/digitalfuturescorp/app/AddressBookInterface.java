@@ -54,7 +54,7 @@ public class AddressBookInterface {
                     break;
                 case "3":
                     //go to delete a contact
-                    gotToDeleteContact();
+                    goToDeleteContact();
                     break;
                 case "4":
                     //go to view contacts
@@ -66,7 +66,7 @@ public class AddressBookInterface {
                     break;
                 case "6":
                     //go to delete all contacts
-                    gotToDeleteAllContacts();
+                    goToDeleteAllContacts();
                     break;
                 case "0":
                     //closes program
@@ -195,7 +195,7 @@ public class AddressBookInterface {
         }
     }
 
-    private void gotToDeleteContact() {
+    private void goToDeleteContact() {
         try {
             System.out.print("Enter the name of the contact you wish to delete:");
             String contactToDelete = theScanner.nextLine();
@@ -211,7 +211,7 @@ public class AddressBookInterface {
         }
     }
 
-    private void gotToDeleteAllContacts() {
+    private void goToDeleteAllContacts() {
         System.out.println("Are you sure you want to delete all contacts? (y/n)");
         String confirmation = theScanner.nextLine();
         try {
@@ -224,7 +224,7 @@ public class AddressBookInterface {
                     break;
                 default:
                     System.out.println("Invalid option.");
-                    gotToDeleteAllContacts();
+                    goToDeleteAllContacts();
                     break;
             }
         } catch (Exception e) {
