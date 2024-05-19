@@ -10,7 +10,6 @@ import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.spy;
 
 public class AddressBookInterfaceTest {
     @Nested
@@ -29,15 +28,6 @@ public class AddressBookInterfaceTest {
             testInterface = new AddressBookInterface(testAddressBook);
             mockArrayList = mock(ArrayList.class);
             scanner = mock(Scanner.class);
-        }
-
-        @AfterEach
-        void tearDown() {
-            testAddressBook = null;
-            testContact = null;
-            testInterface = null;
-            mockArrayList = null;
-            scanner = null;
         }
 
         @Test
