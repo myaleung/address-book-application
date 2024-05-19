@@ -343,7 +343,6 @@ public class AddressBookTest {
             testAddressBook.addContact(testEntry1);
             testAddressBook.addContact(testEntry2);
             //Act
-            int contactListSize = testAddressBook.viewContacts().size();
             boolean result = testAddressBook.deleteAllContacts();
             //Assert
             assertTrue(result);

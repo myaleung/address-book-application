@@ -28,7 +28,8 @@ public class AddressBookInterface {
                 2. Edit a contact\r
                 3. Delete a contact\r
                 4. View all contacts\r
-                5. Search for a contact by name\n
+                5. Search for a contact\r
+                6. Delete all contacts\n
                  or 0 to exit program
             """;
             System.out.println(message);
@@ -215,6 +216,9 @@ public class AddressBookInterface {
             if (isDeleted) {
                 System.out.println("All contacts deleted.");
             }
+            routeTheUser();
+        } catch (IllegalStateException e) {
+            System.out.println("Your address book is currently empty.");
             routeTheUser();
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -26,6 +26,7 @@ public class ContactTest {
     @AfterEach
     void tearDown() {
         testContact = null;
+        testContact2 = null;
     }
 
     @Nested
