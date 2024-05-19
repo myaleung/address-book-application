@@ -11,7 +11,7 @@ public class Main {
         AddressBookInterface dfAddressBook = new AddressBookInterface(addressBook);
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Welcome to your DF Corp AddressBook");
+        System.out.println("Welcome to your DF Corp AddressBook.");
         dfAddressBook.start(scanner);
     }
 }

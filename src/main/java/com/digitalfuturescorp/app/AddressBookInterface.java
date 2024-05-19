@@ -23,14 +23,15 @@ public class AddressBookInterface {
     public void mainMenu() {
         try {
             String message = """
-            Please select and enter a number from the following options:\r
-                1. Add a contact\r
-                2. Edit a contact\r
-                3. Delete a contact\r
-                4. View all contacts\r
-                5. Search for a contact\r
-                6. Delete all contacts\n
-                 or 0 to exit program
+            Please select and enter a number from the following options:
+             1. Add a contact
+             2. Edit a contact
+             3. Delete a contact
+             4. View all contacts
+             5. Search for a contact
+             6. Delete all contacts
+            
+             or 0 to exit program
             """;
             System.out.println(message);
             String option = theScanner.nextLine();
@@ -101,9 +102,9 @@ public class AddressBookInterface {
     private void goToAddNewContact() {
         try {
             System.out.println("""
-                    Adding a new contact:
-                    Please enter their first name:
-                    """);
+            Adding a new contact:
+            Please enter their first name:
+            """);
             String fName = theScanner.nextLine();
             System.out.println("Please enter their surname:");
             String lName = theScanner.nextLine();
@@ -136,7 +137,7 @@ public class AddressBookInterface {
         try {
             System.out.println("Enter the name of the contact you wish to edit:");
             String editContactSearch = theScanner.nextLine();
-            ArrayList<Contact> contactResults = addressBook.searchContacts(editContactSearch);
+            ArrayList<Contact> contactResults = searchResults(editContactSearch);
             String contactResultName = contactResults.get(0).getName();
             editContactChoice(contactResultName, contactResults.get(0));
         } catch (IndexOutOfBoundsException e) {
@@ -198,7 +199,7 @@ public class AddressBookInterface {
         try {
             System.out.print("Enter the name of the contact you wish to delete:");
             String contactToDelete = theScanner.nextLine();
-            Contact contactToDeleteSearch = addressBook.searchContacts(contactToDelete).get(0);
+            Contact contactToDeleteSearch = searchResults(contactToDelete).get(0);
             addressBook.deleteContact(contactToDeleteSearch);
             System.out.printf("Contact %s deleted.%n", contactToDeleteSearch.getName());
             routeTheUser();
@@ -250,7 +251,7 @@ public class AddressBookInterface {
         try {
             System.out.println("Enter the name, email or phone number of the contact to search:");
             String searchName = theScanner.nextLine();
-            ArrayList<Contact> searchResults = addressBook.searchContacts(searchName);
+            ArrayList<Contact> searchResults = searchResults(searchName);
             if (searchResults.isEmpty()) {
                 System.out.println("Found no matching contact");
             } else {
@@ -263,12 +264,16 @@ public class AddressBookInterface {
         }
     }
 
+    private ArrayList<Contact> searchResults(String searchTerm) {
+        return addressBook.searchContacts(searchTerm);
+    }
+
     private void routeTheUser() {
         try {
             String message = """
-            What would you like to do next?\r
-               1 . Go back to main menu\r
-               0 . Exit program
+            What would you like to do next?
+             1. Go back to main menu
+             0. Exit program
             """;
             System.out.println(message);
             String option = theScanner.nextLine();
