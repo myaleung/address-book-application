@@ -48,7 +48,7 @@ public class AddressBook {
 
     public boolean deleteAllContacts() {
         if (contacts.isEmpty()) throw new IllegalStateException("Address book is empty");
-        if (!contacts.isEmpty()) contacts.clear();
+        contacts.clear();
         return contacts.isEmpty();
     }
 }

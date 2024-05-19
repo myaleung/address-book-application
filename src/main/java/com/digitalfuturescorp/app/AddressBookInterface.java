@@ -62,6 +62,10 @@ public class AddressBookInterface {
                     //go to search for a contact
                     gotToSearchContact();
                     break;
+                case "6":
+                    //go to delete all contacts
+                    gotToDeleteAllContacts();
+                    break;
                 case "0":
                     //closes program
                     exitProgram();
@@ -205,9 +209,21 @@ public class AddressBookInterface {
         }
     }
 
+    private void gotToDeleteAllContacts() {
+        try {
+            boolean isDeleted = addressBook.deleteAllContacts();
+            if (isDeleted) {
+                System.out.println("All contacts deleted.");
+            }
+            routeTheUser();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     private void gotToSearchContact() {
         try {
-            System.out.println("Enter the name of the contact:");
+            System.out.println("Enter the name, email or phone number of the contact to search:");
             String searchName = theScanner.nextLine();
             ArrayList<Contact> searchResults = addressBook.searchContacts(searchName);
             if (searchResults.isEmpty()) {

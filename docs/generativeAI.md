@@ -1,4 +1,4 @@
-# Chat GPT 
+# Generative AI
 I asked Chat GPT to generate user stories based on the additional requirements for the Address Book Challenge.
 
 `Can you write some user stories for the following requirements?
@@ -60,3 +60,40 @@ These user stories provide a clear and concise way to understand the requirement
 ---
 I asked co-pilot to how I would edit my contact search method to include searching email and phone number parameters and used this answer to edit my existing method.
 ![img.png](img.png)
+
+---
+I asked Chat GPT if there were any edge cases to consider for these additional requirements and this was the response:
+Yes, there are several edge cases to consider for each user story. Here are some examples:
+
+### User Story 1: Search for a Contact by Phone Number
+**Edge Cases:**
+1. **Empty Search Input:** The user submits the search with an empty phone number field.
+2. **Invalid Phone Number Format:** The user enters a phone number in an invalid format (e.g., letters instead of numbers).
+3. **Partial Matches:** The user enters a partial phone number. Decide if partial matches should be returned or if the search requires an exact match.
+4. **Multiple Matches:** The user enters a phone number that matches multiple contacts.
+
+### User Story 2: Search for a Contact by Email Address
+**Edge Cases:**
+1. **Empty Search Input:** The user submits the search with an empty email address field.
+2. **Invalid Email Format:** The user enters an email address in an invalid format.
+3. **Case Sensitivity:** The system should handle different cases (e.g., uppercase vs. lowercase) and treat them as the same.
+4. **Multiple Matches:** The user enters an email address that matches multiple contacts.
+
+### User Story 3: Search for a Contact by Name, Phone Number, or Email Address
+**Edge Cases:**
+1. **Empty Search Input:** The user submits the search with an empty search field.
+2. **Mixed Format Entries:** The user enters a combination of name, phone number, and email address.
+3. **Partial Matches:** The user enters a partial name, phone number, or email address. Decide if partial matches should be returned or if the search requires an exact match.
+4. **Special Characters:** The user enters special characters in the search field. The system should handle these gracefully.
+5. **Multiple Matches:** The user enters a search term that matches multiple contacts.
+6. **Sorting Edge Cases:** Ensure proper alphabetical sorting for names with special characters, hyphens, or spaces.
+
+### User Story 4: Delete All Contacts at Once
+**Edge Cases:**
+1. **Empty Contact List:** The user attempts to delete all contacts when no contacts are present. Ensure the system handles this gracefully and informs the user that no contacts exist.
+2. **Confirmation Modal:** The user closes the confirmation modal without making a choice.
+3. **Accidental Confirmation:** The user accidentally confirms the deletion. Consider implementing an additional layer of confirmation (e.g., typing "DELETE" to confirm).
+4. **System Failure:** The system encounters an error while attempting to delete the contacts. Ensure proper error handling and user notification.
+5. **Simultaneous Actions:** Another user or process is adding or modifying contacts at the same time as the delete all action. Ensure data integrity and proper handling of concurrent operations.
+
+By considering these edge cases, you can ensure a more robust and user-friendly application.

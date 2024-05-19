@@ -280,6 +280,17 @@ public class AddressBookInterfaceTest {
         }
 
         @Test
+        @DisplayName("Should call delete all contacts once")
+        public void selectedOptionShouldDeleteAllContacts() {
+            //Arrange
+            when(scanner.nextLine()).thenReturn("6", "0");
+            //Act
+            testInterface.start(scanner);
+            //Assert
+            verify(testAddressBook, times(1)).deleteAllContacts();
+        }
+
+        @Test
         @DisplayName("Should register input and exit program")
         public void selectedOptionShouldExitProgram() {
             //Arrange
