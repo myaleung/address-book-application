@@ -211,6 +211,27 @@ public class AddressBookInterface {
     }
 
     private void gotToDeleteAllContacts() {
+        System.out.println("Are you sure you want to delete all contacts? (y/n)");
+        String confirmation = theScanner.nextLine();
+        try {
+            switch (confirmation.toLowerCase()) {
+                case "y":
+                    deleteAllContacts();
+                    break;
+                case "n":
+                    routeTheUser();
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+                    gotToDeleteAllContacts();
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void deleteAllContacts() {
         try {
             boolean isDeleted = addressBook.deleteAllContacts();
             if (isDeleted) {

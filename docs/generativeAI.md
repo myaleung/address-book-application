@@ -1,4 +1,5 @@
-# Generative AI
+# Additional Requirements with Generative AI
+## Searching for Contacts by Phone Number and Email Address & Deleting All Contacts
 I asked ChatGPT to generate user stories based on the additional requirements for the Address Book Challenge. Which I used to check and cross-reference the user stories I had written to see if I could expand or add to my current test plans.
 
 >Can you write some user stories for the following requirements?
@@ -98,7 +99,7 @@ Yes, there are several edge cases to consider for each user story. Here are some
 >
 >By considering these edge cases, you can ensure a more robust and user-friendly application.
 
-A majority of these edge cases were handled in the software by design, however the user notification whilst handling deletion of contacts wasn't included in the requirements. I would look to handle this within the interface of the software, although the address book method could pass through a boolean as an argument for confirmation, but would need to confirm with the product owner if this is a requirement.
+A majority of these edge cases were handled in the software by design. I ended up handling the user notification within the interface of the software, although the address book method could pass through a boolean as an argument for confirmation.
 
 ---
 To quickly cover the tests for the additional requirements, I asked Co-pilot to generate some test cases for deletion of all contacts method to help cover the exceptions in my try, catch block. From this, I was able to add the following tests to my test class for the Address Book Interface to help cover most exceptions throughout the methods:
@@ -138,4 +139,42 @@ To quickly cover the tests for the additional requirements, I asked Co-pilot to 
 >// Assert
 >verify(testAddressBook, times(1)).deleteAllContacts();
 >}
-```
+>```
+I had also asked co-pilot to help generate some tests for the confirmDeleteAllContacts method as well to save time.
+
+>``` java
+>@Test
+>@DisplayName("Should delete all contacts when confirmed")
+>public void gotToDeleteAllContactsShouldDeleteWhenConfirmed() {
+>    when(scanner.nextLine()).thenReturn("y");
+>    when(testAddressBook.deleteAllContacts()).thenReturn(true);
+>    testInterface.start(scanner);
+>    verify(testAddressBook, times(1)).deleteAllContacts();
+>}
+>
+>@Test
+>@DisplayName("Should not delete any contacts when not confirmed")
+>public void gotToDeleteAllContactsShouldNotDeleteWhenNotConfirmed() {
+>    when(scanner.nextLine()).thenReturn("n");
+>    testInterface.start(scanner);
+>    verify(testAddressBook, times(0)).deleteAllContacts();
+>}
+>
+>@Test
+>@DisplayName("Should handle invalid confirmation input")
+>public void gotToDeleteAllContactsShouldHandleInvalidConfirmation() {
+>    when(scanner.nextLine()).thenReturn("invalid", "y");
+>    when(testAddressBook.deleteAllContacts()).thenReturn(true);
+>    testInterface.start(scanner);
+>    verify(testAddressBook, times(1)).deleteAllContacts();
+>}
+>
+>@Test
+>@DisplayName("Should handle exception in gotToDeleteAllContacts method")
+>public void gotToDeleteAllContactsShouldHandleException() {
+>    when(scanner.nextLine()).thenReturn("y");
+>    when(testAddressBook.deleteAllContacts()).thenThrow(new RuntimeException("Mock Exception"));
+>    testInterface.start(scanner);
+>    verify(testAddressBook, times(1)).deleteAllContacts();
+>}
+>```

@@ -29,8 +29,7 @@ The risks that the software may have for the business include,
 - **Data Expansion:** Although the basic information of a contact is kept there isn't a way to increase the field capacity of the address book information.
 - **Software Integration:** The software is currently an app on a computer and hasn't been tested on a phone and thus may not be compatible with the phone app system to easily call contacts from. Email addresses stored on the system also aren't linked and therefore won't open an email provider to compose a message.
 - **International Numbers:** Currently the software handles UK numbers and matches format of numbers to 11 digits. Therefore, it won't be able to handle international phone numbers yet.
-- **Editing and deleting contacts:** The software currently only returns the first match from the search term and will edit or delete the first contact in the list. This may therefore not be the contact the user wants to edit or delete. 
-- **Deleting contacts or whole address book:** When deleting a contact or the whole address book, the software doesn't ask for confirmation and will delete the contact or all contacts immediately. This may lead to accidental deletion of contacts.
+- **Editing and deleting contacts:** The software currently only returns the first match from the search term and will edit or delete the first contact in the list. This may therefore not be the contact the user wants to edit or delete. When deleting a contact, the software also doesn't ask for confirmation and will delete the contact immediately. This may lead to accidental deletion of contacts.
 - **Multiple details:** If a user wanted to add multiple phone numbers, such as for mobile, work and home, or email addresses to a contact, the software currently doesn't allow this and only stores one of each.
 
 ### Conclusion

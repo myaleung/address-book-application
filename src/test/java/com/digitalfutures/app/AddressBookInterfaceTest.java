@@ -204,24 +204,10 @@ public class AddressBookInterfaceTest {
         }
 
         @Test
-        @DisplayName("Should call search for a contact method when viewing")
-        public void selectedOptionShouldViewContacts() {
-            //Arrange
-            when(scanner.nextLine()).thenReturn("4", "0");
-            //Act
-            testInterface.start(scanner);
-            //Assert
-            assertAll(
-                    () -> verify(testAddressBook, times(1)).viewContacts(),
-                    () -> assertEquals(0, testAddressBook.searchContacts(anyString()).size())
-            );
-        }
-
-        @Test
         @DisplayName("Should display all contacts when address book is not empty")
         public void goToViewContactsShouldDisplayWhenNotEmpty() {
             // Arrange
-            mockArrayList.add(new Contact("John", "Doe", "john.doe@example.com", "01234567890"));
+            mockArrayList.add(testContact);
             when(scanner.nextLine()).thenReturn("4", "0");
             when(testAddressBook.viewContacts()).thenReturn(mockArrayList);
             // Act
@@ -283,11 +269,11 @@ public class AddressBookInterfaceTest {
         }
 
         @Test
-        @DisplayName("Should call delete all contacts when address book is not empty")
-        public void gotToDeleteAllContactsShouldDeleteWhenNotEmpty() {
+        @DisplayName("Should call delete all contacts when address book is not empty on confirmation")
+        public void goToDeleteAllContactsShouldDeleteWhenNotEmpty() {
             //Arrange
             when(testAddressBook.deleteAllContacts()).thenReturn(true);
-            when(scanner.nextLine()).thenReturn("6", "0");
+            when(scanner.nextLine()).thenReturn("6", "y", "0");
             //Act
             testInterface.start(scanner);
             //Assert
@@ -295,14 +281,37 @@ public class AddressBookInterfaceTest {
         }
 
         @Test
-        @DisplayName("Should not delete any contacts when address book is empty")
-        public void gotToDeleteAllContactsShouldNotDeleteWhenEmpty() {
+        @DisplayName("Should not delete any contacts when not confirmed")
+        public void goToDeleteAllContactsShouldNotDeleteWhenDenied() {
             // Arrange
-            when(testAddressBook.deleteAllContacts()).thenReturn(false);
-            when(scanner.nextLine()).thenReturn("6", "0");
+            when(scanner.nextLine()).thenReturn("6", "n", "0");
             // Act
             testInterface.start(scanner);
             // Assert
+            verify(testAddressBook, times(0)).deleteAllContacts();
+        }
+
+        @Test
+        @DisplayName("Should handle when address book is empty")
+        public void goToDeleteAllContactsShouldHandleExceptionWhenEmpty() {
+            // Arrange
+            when(testAddressBook.deleteAllContacts()).thenThrow(new IllegalStateException());
+            when(scanner.nextLine()).thenReturn("6", "y", "0");
+            // Act
+            testInterface.start(scanner);
+            // Assert
+            verify(testAddressBook, times(1)).deleteAllContacts();
+        }
+
+        @Test
+        @DisplayName("Should handle invalid confirmation input")
+        public void goToDeleteAllContactsShouldHandleInvalidConfirmation() {
+            //Arrange
+            when(scanner.nextLine()).thenReturn("6","invalid", "y", "0");
+            when(testAddressBook.deleteAllContacts()).thenReturn(true);
+            //Act
+            testInterface.start(scanner);
+            //Assert
             verify(testAddressBook, times(1)).deleteAllContacts();
         }
 
@@ -351,8 +360,8 @@ public class AddressBookInterfaceTest {
         }
 
         @Nested
-        @DisplayName("Address Book Interface Edge Cases")
-        public class AddressBookInterfaceEdgeCases {
+        @DisplayName("Address Book Interface Exception Cases")
+        public class AddressBookInterfaceExceptionCases {
             @Test
             @DisplayName("Should handle invalid option in selectedOption method")
             public void selectedOptionShouldHandleInvalidOption() {
@@ -445,8 +454,8 @@ public class AddressBookInterfaceTest {
             }
 
             @Test
-            @DisplayName("Should handle exception in gotToDeleteContact method")
-            public void gotToDeleteContactShouldHandleException() {
+            @DisplayName("Should handle exception in goToDeleteContact method")
+            public void goToDeleteContactShouldHandleException() {
                 // Arrange
                 when(scanner.nextLine()).thenReturn("3", "John").thenThrow(new RuntimeException("Mock Exception"));
                 // Act
@@ -456,15 +465,15 @@ public class AddressBookInterfaceTest {
             }
 
             @Test
-            @DisplayName("Should handle exception in gotToDeleteAllContacts method")
-            public void gotToDeleteAllContactsShouldHandleException() {
+            @DisplayName("Should handle exception in goToDeleteAllContacts method")
+            public void goToDeleteAllContactsShouldHandleException() {
                 // Arrange
                 when(testAddressBook.deleteAllContacts()).thenThrow(new RuntimeException("Mock Exception"));
-                when(scanner.nextLine()).thenReturn("6", "0");
+                when(scanner.nextLine()).thenReturn("6", "y", "0");
                 // Act
                 testInterface.start(scanner);
                 // Assert
-                verify(scanner, times(1)).nextLine();
+                verify(scanner, times(2)).nextLine();
                 verify(testAddressBook, times(1)).deleteAllContacts();
             }
 
