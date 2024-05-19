@@ -211,6 +211,17 @@ public class AddressBookTest {
             //Assert
             assertTrue(testAddressBook.searchContacts(searchPhoneNo).contains(testEntry));
         }
+
+        @Test
+        @DisplayName("Should throw error is invalid characters are in search term")
+        public void testShouldThrowExceptionIfInvalidCharactersUsedInSearchTerm() {
+            //Arrange
+            String searchTerm = "01were%%??1123";
+            testAddressBook.addContact(testEntry);
+            //Act
+            //Assert
+            assertThrows(IllegalArgumentException.class, ()-> testAddressBook.searchContacts(searchTerm));
+        }
     }
 
     @Nested

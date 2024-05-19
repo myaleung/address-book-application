@@ -28,6 +28,7 @@ public class AddressBook {
 
     public ArrayList<Contact> searchContacts(String searchTerm) {
         if (Validation.isNull(searchTerm) || Validation.isEmpty(searchTerm)) throw new IllegalArgumentException("Search term cannot be null or empty");
+        if (!Validation.matchesSearchRegEx(searchTerm)) throw new IllegalArgumentException("Search term contains invalid characters");
         ArrayList<Contact> results = new ArrayList<>();
         for(Contact contact : contacts) {
             if (contact.getName().toLowerCase().contains(searchTerm.toLowerCase()) ||
